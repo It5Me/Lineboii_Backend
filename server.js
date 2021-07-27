@@ -5,11 +5,16 @@ const passport = require('passport');
 const LineStrategy = require('passport-line').Strategy;
 const connectDB = require('./src/config/db');
 const session = require('express-session');
-connectDB();
+const cors = require('cors');
+const bodyParser = require('body-parser');
+
+// connectDB();
 const app = express();
 const RestaurantRoute = require('./src/routes/RestaurantRoute');
 app.use(express.json());
-
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 // required for passport
 app.use(session({ secret: config.SESSION_SECRET }));
 app.use(passport.initialize());
@@ -26,8 +31,7 @@ passport.use(
         {
             channelID: config.LINE_CHANNEL_ID,
             channelSecret: config.LINE_CHANNEL_SECRET,
-            callbackURL:
-                'https://shrouded-plains-45055.herokuapp.com/auth/line/callback',
+            callbackURL: 'http://localhost:1234',
         },
         function (accessToken, refreshToken, profile, done) {
             // asynchronous verification, for effect...
@@ -59,6 +63,10 @@ app.get(
     }
 );
 app.use(RestaurantRoute);
+
+app.get('/test', (req, res) => {
+    res.send('eiei');
+});
 app.listen(config.PORT, () =>
     console.log(`Server RUNNING ON PORT ${config.PORT}`)
 );
