@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-// const FoodAddition = require('./FoodAddition');
+const foodAdditionSchema = require('./FoodAddition');
 const foodSetSchema = new Schema({
     foodImageURL: {
         type: String,
@@ -11,7 +11,7 @@ const foodSetSchema = new Schema({
     subtitle: {
         type: String,
     },
-    // foodAddition: [FoodAddition.foodAdditionSchema],
+    foodAddition: [foodAdditionSchema],
 });
 
 mongoose.model('foodset', foodSetSchema);

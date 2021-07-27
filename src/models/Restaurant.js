@@ -26,6 +26,7 @@ const restaurantSchema = new Schema({
     },
     restaurantImageURL: {
         type: String,
+        require: true,
     },
     foodset: [foodSetSchema],
 });
