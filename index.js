@@ -20,13 +20,16 @@ passport.use(
         },
         function (accessToken, refreshToken, profile, done) {
             // asynchronous verification, for effect...
-            process.nextTick(function () {
-                // To keep the example simple, the user's LINE profile is returned to
-                // represent the logged-in user.  In a typical application, you would want
-                // to associate the LINE account with a user record in your database,
-                // and return that user instead.
-                return done(null, profile);
-            });
+            // process.nextTick(function () {
+            //     // To keep the example simple, the user's LINE profile is returned to
+            //     // represent the logged-in user.  In a typical application, you would want
+            //     // to associate the LINE account with a user record in your database,
+            //     // and return that user instead.
+            //     return done(null, profile);
+            // });
+            console.log('accesToken', accessToken);
+            console.log('refreshToken', refreshToken);
+            console.log('profile', profile);
         }
     )
 );
@@ -41,7 +44,8 @@ app.get(
     '/auth/line/callback',
     passport.authenticate('line', { failureRedirect: '/login' }),
     function (req, res) {
-        res.redirect('/');
+        // res.redirect('/');
+        res.send('success');
     }
 );
 app.use(RestaurantRoute);
