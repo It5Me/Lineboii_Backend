@@ -12,7 +12,6 @@ const userSchema = require('./src/models/User');
 const mongoose = require('mongoose');
 const User = mongoose.model('user');
 const Profile = mongoose.model('profile');
-connectDB();
 const app = express();
 const RestaurantRoute = require('./src/routes/RestaurantRoute');
 const UserRoute = require('./src/routes/UserRoute');
@@ -24,6 +23,7 @@ app.use(cors());
 app.use(session({ secret: config.SESSION_SECRET }));
 app.use(passport.initialize());
 app.use(passport.session());
+connectDB();
 passport.serializeUser(function (user, done) {
     done(null, user);
 });
@@ -31,7 +31,7 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (obj, done) {
     done(null, obj);
 });
-console.log('chanelID', config.LINE_CHANNEL_SECRET);
+
 passport.use(
     new LineStrategy(
         {
