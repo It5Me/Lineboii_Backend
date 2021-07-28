@@ -72,6 +72,9 @@ app.get('/auth/line', passport.authenticate('line'), function (req, res) {
     // function will not be called.4
 });
 //check ว่า ล็อคอินได้ไหม
+app.get('/', (req, res) => {
+    res.send('test');
+});
 app.get(
     '/auth/line/callback',
     passport.authenticate('line', {
@@ -82,6 +85,4 @@ app.get(
 );
 app.use(UserRoute);
 app.use(RestaurantRoute);
-app.listen(config.PORT, () =>
-    console.log(`Server RUNNING ON PORT ${config.PORT}`)
-);
+app.listen(config.PORT, () => console.log(`Server RUNNING ON PORT ${config.PORT}`));
