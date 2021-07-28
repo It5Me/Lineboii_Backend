@@ -34,8 +34,8 @@ passport.deserializeUser(function (obj, done) {
 passport.use(
     new LineStrategy(
         {
-            channelID: config.LINE_CHANNEL_ID,
-            channelSecret: config.LINE_CHANNEL_SECRET,
+            clientID: config.LINE_CHANNEL_ID,
+            clientSecret: config.LINE_CHANNEL_SECRET,
             callbackURL: 'http://localhost:1234/auth/line/callback',
         },
         function (accessToken, refreshToken, profile, done) {
