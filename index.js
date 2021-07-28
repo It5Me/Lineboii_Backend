@@ -31,11 +31,12 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (obj, done) {
     done(null, obj);
 });
+console.log('chanelID', config.LINE_CHANNEL_SECRET);
 passport.use(
     new LineStrategy(
         {
-            clientID: config.LINE_CHANNEL_ID,
-            clientSecret: config.LINE_CHANNEL_SECRET,
+            channelID: config.LINE_CHANNEL_ID,
+            channelSecret: config.LINE_CHANNEL_SECRET,
             callbackURL: 'http://localhost:1234/auth/line/callback',
         },
         function (accessToken, refreshToken, profile, done) {
