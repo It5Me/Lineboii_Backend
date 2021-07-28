@@ -20,5 +20,5 @@ const profileSchema = new Schema({
     },
 });
 console.log('create profile');
-
+mongoose.model('profile', profileSchema);
 module.exports = profileSchema;

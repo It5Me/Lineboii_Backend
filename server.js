@@ -8,7 +8,10 @@ const session = require('express-session');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const axios = require('axios');
-
+const userSchema = require('./src/models/User');
+const mongoose = require('mongoose');
+const User = mongoose.model('user');
+const Profile = mongoose.model('profile');
 connectDB();
 const app = express();
 const RestaurantRoute = require('./src/routes/RestaurantRoute');
@@ -33,12 +36,22 @@ passport.use(
         {
             channelID: config.LINE_CHANNEL_ID,
             channelSecret: config.LINE_CHANNEL_SECRET,
-            callbackURL: 'https://angular-56d6.hostman.site/',
+            callbackURL: 'http://localhost:1234/auth/line/callback',
         },
         function (accessToken, refreshToken, profile, done) {
-            console.log('accesToken', accessToken);
+            console.log('accessToken', accessToken);
             console.log('refreshToken', refreshToken);
-            console.log('profile', profile);
+            console.log('profile', profile.id);
+            const newProfile = new Profile(profile);
+            newProfile.save((err, profile) => {
+                const newUser = new User({
+                    accessToken,
+                    refreshToken,
+                    profile_id: profile._id,
+                });
+                newUser.save();
+            });
+
             // asynchronous verification, for effect...
             process.nextTick(function () {
                 // To keep the example simple, the user's LINE profile is returned to
@@ -53,17 +66,19 @@ passport.use(
 );
 // //when use req.body
 
+//ไอเขียวหน้าล็อคอิน
 app.get('/auth/line', passport.authenticate('line'), function (req, res) {
     // The request will be redirected to LINE for authentication, so this
     // function will not be called.4
 });
+//check ว่า ล็อคอินได้ไหม
 app.get(
     '/auth/line/callback',
-    passport.authenticate('line', { failureRedirect: '/login' }),
-    function (req, res) {
-        res.redirect('/');
-        // res.send('success');
-    }
+    passport.authenticate('line', {
+        failureRedirect: '/login',
+        successRedirect: '/data',
+    }),
+    function (req, res) {}
 );
 app.use(UserRoute);
 app.use(RestaurantRoute);
