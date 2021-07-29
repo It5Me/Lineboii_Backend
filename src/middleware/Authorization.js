@@ -24,7 +24,7 @@ const Authorization = async (req, res, next) => {
         // console.log('user', currentUser.profile_id.displayName);
         console.log(currentUser);
         // console.log(req.user);
-        req.user = currentUser.profile_id;
+        req.user = currentUser;
         console.log('currentUser', req.user);
         next();
     } catch (error) {
