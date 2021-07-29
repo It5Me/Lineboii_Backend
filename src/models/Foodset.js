@@ -15,4 +15,4 @@ const foodSetSchema = new Schema({
 });
 
 mongoose.model('foodset', foodSetSchema);
-module.exports = foodSetSchema;
+// module.exports = foodSetSchema;

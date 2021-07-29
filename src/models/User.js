@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const profileSchema = require('./Profile');
+// const profileSchema = require('./Profile');
 const userSchema = new Schema({
     accessToken: {
         type: String,
@@ -31,5 +31,5 @@ const userSchema = new Schema({
 //     profile_id: profile._id,
 // });
 // user.save();
-const User = mongoose.model('user', userSchema);
-module.exports = { userSchema, User };
+ mongoose.model('user', userSchema);
+// module.exports = { userSchema, User };

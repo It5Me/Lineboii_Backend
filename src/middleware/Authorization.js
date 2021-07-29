@@ -8,9 +8,8 @@ const Authorization = async (req, res, next) => {
         if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
             accessToken = req.headers.authorization.split(' ')[1];
 
-            // console.log('accessToken', accessToken);
+            console.log('accessToken', accessToken);
             // req.accessToken = accessToken;
-            next();
         }
     } catch (err) {
         console.log(err);
@@ -23,7 +22,10 @@ const Authorization = async (req, res, next) => {
             select: 'displayName',
         });
         // console.log('user', currentUser.profile_id.displayName);
-        req.user = currentUser;
+        console.log(currentUser);
+        // console.log(req.user);
+        req.user = currentUser.profile_id;
+        console.log('currentUser', req.user);
         next();
     } catch (error) {
         console.log(error);

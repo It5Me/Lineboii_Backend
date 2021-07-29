@@ -16,4 +16,4 @@ const foodAdditionSchema = new Schema({
     menu: [menuSchema],
 });
 mongoose.model('foodaddition', foodAdditionSchema);
-module.exports = foodAdditionSchema;
+// module.exports = foodAdditionSchema;

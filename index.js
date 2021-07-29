@@ -8,7 +8,7 @@ const session = require('express-session');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const axios = require('axios');
-const userSchema = require('./src/models/User');
+require('./src/models');
 const mongoose = require('mongoose');
 const User = mongoose.model('user');
 const Profile = mongoose.model('profile');
@@ -81,6 +81,7 @@ app.get(
     }),
     function (req, res) {}
 );
+// app.use('/api/userRoute/', UserRoute);
 app.use(UserRoute);
 app.use(RestaurantRoute);
 app.listen(config.PORT, () => console.log(`Server RUNNING ON PORT ${config.PORT}`));
