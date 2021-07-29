@@ -19,9 +19,11 @@ const Authorization = async (req, res, next) => {
             model: 'profile',
             select: 'displayName',
         });
-        console.log('user', currentUser.profile_id.displayName);
+        // console.log('user', currentUser.profile_id.displayName);
+        req.user = currentUser;
+        next();
     } catch (error) {
-        consolr.log(error);
+        console.log(error);
     }
 };
 

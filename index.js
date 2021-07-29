@@ -73,14 +73,11 @@ app.get('/auth/line', passport.authenticate('line'), function (req, res) {
     // function will not be called.4
 });
 //check ว่า ล็อคอินได้ไหม
-app.get('/', (req, res) => {
-    res.send('test');
-});
 app.get(
     '/auth/line/callback',
     passport.authenticate('line', {
         failureRedirect: '/login',
-        successRedirect: '/data',
+        successRedirect: '/user',
     }),
     function (req, res) {}
 );

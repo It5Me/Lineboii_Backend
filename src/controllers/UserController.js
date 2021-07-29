@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const userSchema = require('../models/User');
 // const profile = require('../models/Profile');
 module.exports.user_post = (req, res, next) => {
-    // console.log('req', req.body);
+    console.log('req', req.body);
+
     res.send('success');
 };
