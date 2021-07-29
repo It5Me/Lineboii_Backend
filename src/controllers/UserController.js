@@ -8,7 +8,7 @@ module.exports.user_post = (req, res, next) => {
     res.send('postuser');
 };
 module.exports.user_get = async (req, res, next) => {
-    console.log('req', req.body);
+    console.log('req', req.user);
 
     res.send('getuser');
 };
