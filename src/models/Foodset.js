@@ -11,7 +11,9 @@ const foodSetSchema = new Schema({
     subtitle: {
         type: String,
     },
-    foodAddition: [foodAdditionSchema],
+    foodAddition: {
+        type: mongoose.Types.ObjectId,
+    },
 });
 
 mongoose.model('foodset', foodSetSchema);

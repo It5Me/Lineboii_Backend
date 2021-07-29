@@ -31,5 +31,4 @@ const userSchema = new Schema({
 //     profile_id: profile._id,
 // });
 // user.save();
- mongoose.model('user', userSchema);
-// module.exports = { userSchema, User };
+mongoose.model('user', userSchema);

@@ -40,15 +40,15 @@ passport.use(
             callbackURL: 'https://shrouded-plains-45055.herokuapp.com/auth/line/callback',
         },
         function (accessToken, refreshToken, profile, done) {
-            console.log('accessToken', accessToken);
-            console.log('refreshToken', refreshToken);
-            console.log('profile', profile.id);
+            // console.log('accessToken', accessToken);
+            // console.log('refreshToken', refreshToken);
+            // console.log('profile', profile.id);
             const newProfile = new Profile(profile);
             newProfile.save((err, profile) => {
                 const newUser = new User({
                     accessToken,
                     refreshToken,
-                    profile_id: profile._id,
+                    profile_id: profile,
                 });
                 newUser.save();
             });

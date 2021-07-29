@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const foodSetSchema = require('./Foodset');
-// const FoodSet = mongoose.model('foodset');
 const Schema = mongoose.Schema;
 const restaurantSchema = new Schema({
     name: {
@@ -13,7 +11,11 @@ const restaurantSchema = new Schema({
         require: true,
     },
     dailyCloseTime: {
-        type: Date,
+        type: String,
+        require: true,
+    },
+    dailyOpenTime: {
+        type: String,
         require: true,
     },
     isPickup: {
@@ -28,7 +30,9 @@ const restaurantSchema = new Schema({
         type: String,
         require: true,
     },
-    foodset: [foodSetSchema],
+    foodset: {
+        type: mongoose.Types.ObjectId,
+    },
 });
 
 mongoose.model('restaurant', restaurantSchema);

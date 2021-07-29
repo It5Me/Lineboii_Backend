@@ -7,9 +7,7 @@ const Authorization = async (req, res, next) => {
     try {
         if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
             accessToken = req.headers.authorization.split(' ')[1];
-
-            console.log('accessToken', accessToken);
-            // req.accessToken = accessToken;
+            // console.log('accessToken ', accessToken);
         }
     } catch (err) {
         console.log(err);
@@ -19,13 +17,11 @@ const Authorization = async (req, res, next) => {
         const currentUser = await User.findOne({ accessToken }).populate({
             path: 'profile_id',
             model: 'profile',
-            select: 'displayName',
+            select: 'userId displayName pictureUrl statusMessage',
         });
         // console.log('user', currentUser.profile_id.displayName);
-        console.log(currentUser);
-        // console.log(req.user);
         req.user = currentUser;
-        console.log('currentUser', req.user);
+        console.log('currentUser Authorization', req.user);
         next();
     } catch (error) {
         console.log(error);

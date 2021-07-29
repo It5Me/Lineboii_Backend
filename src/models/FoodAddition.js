@@ -13,7 +13,9 @@ const foodAdditionSchema = new Schema({
     additionalDetail: {
         type: String,
     },
-    menu: [menuSchema],
+    menu: {
+        type: mongoose.Types.ObjectId,
+    },
 });
 mongoose.model('foodaddition', foodAdditionSchema);
-// module.exports = foodAdditionSchema;
+
