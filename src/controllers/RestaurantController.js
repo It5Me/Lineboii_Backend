@@ -1,19 +1,17 @@
 const mongoose = require('mongoose');
 const Restaurant = mongoose.model('restaurant');
-const Foodset = mongoose.model('foodset');
-module.exports.restaurant_home_get = (req, res) => {
+
+module.exports.restaurant_home_get = async (req, res) => {
     const user = req.user;
-    // console.log(req.user.profile_id.displayName);
+
     try {
         if (!user) {
             return res.send('NoAuthorization');
         }
-        Restaurant.find({}, { name: 1, restaurantImageURL: 1 }, function (err, restaurant) {
-            // console.log('resPim', restaurant);
-            console.log(restaurant[0]);
-        });
-        // console.log('resPim', restaurantHomeData.);
-        res.send('succes Restaurant');
+        const restaurant = await Restaurant.find({}, { name: 1, restaurantImageURL: 1 });
+
+        console.log('restaurantData', restaurant);
+        res.json(restaurant);
     } catch (error) {
         console.log(error);
     }
