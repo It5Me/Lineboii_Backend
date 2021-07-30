@@ -6,8 +6,6 @@ const LineStrategy = require('passport-line').Strategy;
 const connectDB = require('./src/config/db');
 const session = require('express-session');
 const cors = require('cors');
-const bodyParser = require('body-parser');
-const axios = require('axios');
 require('./src/models');
 const mongoose = require('mongoose');
 const User = mongoose.model('user');
@@ -16,8 +14,8 @@ const app = express();
 const RestaurantRoute = require('./src/routes/RestaurantRoute');
 const UserRoute = require('./src/routes/UserRoute');
 app.use(express.json());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
+
 app.use(cors());
 // required for passport
 app.use(session({ secret: config.SESSION_SECRET }));
@@ -81,7 +79,7 @@ app.get(
     }),
     function (req, res) {}
 );
-// app.use('/api/userRoute/', UserRoute);
+// app.use('/api/', UserRoute);
 app.use(UserRoute);
 app.use(RestaurantRoute);
 app.listen(config.PORT, () => console.log(`Server RUNNING ON PORT ${config.PORT}`));

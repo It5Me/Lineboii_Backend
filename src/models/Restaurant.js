@@ -33,6 +33,14 @@ const restaurantSchema = new Schema({
     foodset: {
         type: mongoose.Types.ObjectId,
     },
+    myScore: {
+        type: Number,
+        require: true,
+    },
+    overallScore: {
+        type: Number,
+        require: true,
+    },
 });
 
 mongoose.model('restaurant', restaurantSchema);
