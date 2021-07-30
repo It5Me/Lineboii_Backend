@@ -11,6 +11,8 @@ const mongoose = require('mongoose');
 const User = mongoose.model('user');
 const Profile = mongoose.model('profile');
 const app = express();
+
+const BrandRoute = require('./src/routes/BrandRoute');
 const RestaurantRoute = require('./src/routes/RestaurantRoute');
 const UserRoute = require('./src/routes/UserRoute');
 app.use(express.json());
@@ -80,6 +82,7 @@ app.get(
     function (req, res) {}
 );
 // app.use('/api/', UserRoute);
+app.use(BrandRoute);
 app.use(UserRoute);
 app.use(RestaurantRoute);
 app.listen(config.PORT, () => console.log(`Server RUNNING ON PORT ${config.PORT}`));

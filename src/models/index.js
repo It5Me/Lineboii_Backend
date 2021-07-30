@@ -4,3 +4,4 @@ require('./Menu');
 require('./Profile');
 require('./Restaurant');
 require('./User');
+require('./Brand');

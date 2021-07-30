@@ -20,15 +20,28 @@ module.exports.restaurant_home_get = async (req, res) => {
 module.exports.restaurant_trending_get = async (req, res) => {
     const limit = Number.parseInt(req.query.limit);
     try {
-        const restaurantsTrending = await Restaurant.find({}, { name: 1 }, { sort: { field: 'asc', overallScore: -1 }, limit: limit });
+        const restaurantsTrending = await Restaurant.find(
+            {},
+            { name: 1, restaurantImageURL: 1, overallScore: 1 },
+            { sort: { field: 'asc', overallScore: -1 }, limit: limit }
+        );
         console.log(restaurantsTrending);
+        res.json(restaurantsTrending);
     } catch (error) {
         console.log(error);
     }
 };
-module.exports.restaurant_recommend_get = async (req, res) => {};
-
-// module.exports.restaurant_post = (req, res) => {
-//     console.log('restaurant', req.user.accessToken);
-//     res.send('post');
-// };
+module.exports.restaurant_recommend_get = async (req, res) => {
+    const limit = Number.parseInt(req.query.limit);
+    try {
+        const restaurantRecommend = await Restaurant.find(
+            {},
+            { name: 1, restaurantImageURL: 1, myScore: 1 },
+            { sort: { field: 'asc', myScore: -1 }, limit: limit }
+        );
+        console.log(restaurantRecommend);
+        res.json(restaurantRecommend);
+    } catch (error) {
+        console.log(error);
+    }
+};
