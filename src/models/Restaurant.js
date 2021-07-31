@@ -29,7 +29,7 @@ const restaurantSchema = new Schema({
         type: String,
         require: true,
     },
-    foodset: {
+    foodId: {
         type: mongoose.Types.ObjectId,
     },
     myScore: {

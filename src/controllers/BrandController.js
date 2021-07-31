@@ -9,23 +9,26 @@ module.exports.brands_get = async (req, res) => {
             select: 'name restaurantImageURL',
         });
         console.log(brandsRestaurant);
-        res.json(brandsRestaurant);
+        return res.status(200).json({ status: true, message: brandsRestaurant });
     } catch (error) {
         console.log(error);
+        return res.status(400).json({ status: false, message: error.message });
     }
 };
 module.exports.brand_get = async (req, res) => {
     const name = req.query.brandName;
     if (name === null || name === undefined) {
-        res.send('No brandName');
+        return res.status(404).json({ status: false, message: 'Invalid Brandname' });
     }
     try {
         const brandRestaurants = await Brand.find({ name: name });
         console.log(brandRestaurants);
+        return res.status(200).json({ status: true, message: brandRestaurants });
     } catch (error) {
         console.log(error);
-        res.json({
-            error: error.message,
+        return res.status(400).json({
+            status: false,
+            message: error.message,
         });
     }
 };

@@ -1,5 +1,5 @@
 require('./FoodAddition');
-require('./Foodset');
+require('./Food');
 require('./Menu');
 require('./Profile');
 require('./Restaurant');

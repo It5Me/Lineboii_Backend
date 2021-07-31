@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const foodAdditionSchema = require('./FoodAddition');
-const foodSetSchema = new Schema({
+const foodSchema = new Schema({
     foodImageURL: {
         type: String,
     },
@@ -16,5 +15,4 @@ const foodSetSchema = new Schema({
     },
 });
 
-mongoose.model('foodset', foodSetSchema);
-// module.exports = foodSetSchema;
+mongoose.model('food', foodSchema);

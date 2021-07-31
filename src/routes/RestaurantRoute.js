@@ -5,5 +5,6 @@ const Authorization = require('../middleware/Authorization');
 router.get('/restaurants/home', Authorization, RestaurantController.restaurant_home_get);
 router.get('/restaurants/trending', Authorization, RestaurantController.restaurant_trending_get);
 router.get('/restaurants/recommend', Authorization, RestaurantController.restaurant_recommend_get);
-
+router.get('/restaurant/food', Authorization, RestaurantController.restaurant_food_get);
+router.get('/restaurant/menus', Authorization, RestaurantController.restaurant_menus_get);
 module.exports = router;
