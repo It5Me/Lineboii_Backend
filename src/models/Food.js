@@ -10,6 +10,9 @@ const foodSchema = new Schema({
     subtitle: {
         type: String,
     },
+    price: {
+        type: Number,
+    },
     foodAdditionId: {
         type: mongoose.Types.ObjectId,
     },

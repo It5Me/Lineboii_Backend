@@ -58,20 +58,20 @@ module.exports.restaurant_food_get = async (req, res) => {
         const dataRestaurant = await Restaurant.findOne({ name: nameRestaurant }, {}, {})
             .populate({
                 path: 'foodCategoriesId',
-                model: 'food',
-                select: 'title foodImageURL',
+                model: 'foodcategory',
+                select: 'header ',
                 populate: {
                     path: 'foodId',
-                    model: 'foodaddition',
-                    select: 'title type additionalDetail',
+                    model: 'food',
+                    select: 'title subtitle price foodImageURL',
                     populate: {
                         path: 'foodAdditionId',
                         model: 'foodaddition',
-                        select: 'title type menuId',
+                        select: 'title type menuId additionalDetail',
                         populate: {
                             path: 'menuId',
                             model: 'menu',
-                            select: 'name price',
+                            select: 'name price status',
                         },
                     },
                 },
@@ -93,18 +93,5 @@ module.exports.restaurant_food_get = async (req, res) => {
             status: false,
             message: error.message,
         });
-    }
-};
-module.exports.restaurant_menus_get = async (req, res) => {
-    const nameRestaurant = req.query.nameRestaurant;
-    try {
-        const menusRestaurant = await Restaurant.find({ name: nameRestaurant }).populate({
-            path: 'menuId',
-            model: 'menu',
-            select: 'name',
-        });
-        console.log('menusRestaurant', menusRestaurant);
-    } catch (error) {
-        console.log(error.message);
     }
 };

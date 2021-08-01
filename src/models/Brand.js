@@ -10,17 +10,17 @@ const brandSchema = new Schema({
 });
 const Menu = mongoose.model('menu');
 const menu = new Menu({
-    name: 'ปลาหิมะนึงซีอิ้ว',
-    price: 209,
+    name: 'ขนมปัง',
+    price: 15,
     status: true,
 });
 menu.save();
 
 const FoodAddition = mongoose.model('foodaddition');
 const foodaddition = new FoodAddition({
-    title: 'ปลาหิมะ',
+    title: 'ความหวาน',
     type: 'checkbox',
-    additionalDetail: 'เพิ่มซอส',
+    additionalDetail: 'หวาน 50%',
     menuId: menu._id,
 });
 foodaddition.save();
@@ -28,8 +28,9 @@ foodaddition.save();
 const Food = mongoose.model('food');
 const food = new Food({
     foodImageURL: 'shorturl.at/rGI12',
-    title: 'ปลาแซลม่อน',
-    subtitle: 'ปลาจากญี่ปุ่น',
+    title: 'แบล็คคอฟฟี่น้ำผึง',
+    subtitle: 'Iced Honey Black Coffee',
+    price: 65,
     foodAdditionId: foodaddition._id,
 });
 food.save();
@@ -41,7 +42,7 @@ const foodcategory = new FoodCategory({
 foodcategory.save();
 const Restaurant = mongoose.model('restaurant');
 const restaurant = new Restaurant({
-    name: 'Fuji',
+    name: 'Amazonn',
     isOfficial: true,
     dailyCloseTime: 'จะปิดในเวลา 20:00',
     dailyOpenTime: 'จะเปิดในเวลา 10:00',
@@ -55,7 +56,7 @@ const restaurant = new Restaurant({
 restaurant.save();
 const Brand = mongoose.model('brand', brandSchema);
 const brand = new Brand({
-    name: 'Fuji',
+    name: 'Amazon',
     restaurants: restaurant._id,
 });
 brand.save();
