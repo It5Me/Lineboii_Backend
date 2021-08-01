@@ -57,17 +57,22 @@ module.exports.restaurant_food_get = async (req, res) => {
     try {
         const dataRestaurant = await Restaurant.findOne({ name: nameRestaurant }, {}, {})
             .populate({
-                path: 'foodId',
+                path: 'foodCategoriesId',
                 model: 'food',
-                select: 'title foodAddition',
+                select: 'title foodImageURL',
                 populate: {
-                    path: 'foodAddition',
+                    path: 'foodId',
                     model: 'foodaddition',
-                    select: 'title type menuId',
+                    select: 'title type additionalDetail',
                     populate: {
-                        path: 'menuId',
-                        model: 'menu',
-                        select: 'name price',
+                        path: 'foodAdditionId',
+                        model: 'foodaddition',
+                        select: 'title type menuId',
+                        populate: {
+                            path: 'menuId',
+                            model: 'menu',
+                            select: 'name price',
+                        },
                     },
                 },
             })

@@ -5,7 +5,7 @@ const foodCategorySchema = new Schema({
     header: {
         type: String,
     },
-    food: {
+    foodId: {
         type: mongoose.Types.ObjectId,
     },
 });

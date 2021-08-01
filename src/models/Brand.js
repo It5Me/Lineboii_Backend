@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
 const brandSchema = new Schema({
     name: {
         type: String,
@@ -31,9 +30,15 @@ const food = new Food({
     foodImageURL: 'shorturl.at/rGI12',
     title: 'ปลาแซลม่อน',
     subtitle: 'ปลาจากญี่ปุ่น',
-    foodAddition: foodaddition._id,
+    foodAdditionId: foodaddition._id,
 });
 food.save();
+const FoodCategory = mongoose.model('foodcategory');
+const foodcategory = new FoodCategory({
+    header: 'กาแฟ',
+    foodId: food._id,
+});
+foodcategory.save();
 const Restaurant = mongoose.model('restaurant');
 const restaurant = new Restaurant({
     name: 'Fuji',
@@ -43,7 +48,7 @@ const restaurant = new Restaurant({
     isPickup: true,
     distance: 1.5,
     restaurantImageURL: 'shorturl.at/rGI12',
-    foodId: food._id,
+    foodCategoriesId: foodcategory._id,
     myScore: 21,
     overallScore: 23,
 });
