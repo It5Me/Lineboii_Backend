@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Restaurant = mongoose.model('restaurant');
 const Food = mongoose.model('food');
+const { inspect } = require('util');
+
 module.exports.restaurant_home_get = async (req, res) => {
     const user = req.user;
     const limit = Number.parseInt(req.query.limit);
@@ -50,18 +52,34 @@ module.exports.restaurant_recommend_get = async (req, res) => {
 };
 module.exports.restaurant_food_get = async (req, res) => {
     const nameRestaurant = req.query.nameRestaurant;
-    console.log('nameRestaurant', nameRestaurant);
+    let message = '';
+    // console.log('nameRestaurant', nameRestaurant);
     try {
-        const foodRestaurant = await Restaurant.findOne({ name: nameRestaurant }, {}, {}).populate({
-            path: 'foodId',
-            model: 'food',
-            select: 'title foodAddition',
-        });
-        console.log(foodRestaurant);
+        const dataRestaurant = await Restaurant.findOne({ name: nameRestaurant }, {}, {})
+            .populate({
+                path: 'foodId',
+                model: 'food',
+                select: 'title foodAddition',
+                populate: {
+                    path: 'foodAddition',
+                    model: 'foodaddition',
+                    select: 'title type menuId',
+                    populate: {
+                        path: 'menuId',
+                        model: 'menu',
+                        select: 'name price',
+                    },
+                },
+            })
+            .exec(function (err, docs) {
+                console.log(inspect(docs, { depth: null }));
+                message = docs;
+            });
+        console.log('message', message);
 
         return res.status(200).json({
             status: true,
-            message: foodRestaurant,
+            message: dataRestaurant,
         });
     } catch (error) {
         console.log('error');

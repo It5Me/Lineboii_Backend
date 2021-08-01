@@ -10,7 +10,7 @@ const foodSchema = new Schema({
     subtitle: {
         type: String,
     },
-    foodAddition: {
+    foodAdditionId: {
         type: mongoose.Types.ObjectId,
     },
 });
