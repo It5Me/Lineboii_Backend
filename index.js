@@ -11,7 +11,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model('user');
 const Profile = mongoose.model('profile');
 const app = express();
-
+const DashboardRoute = require('./src/routes/DashboardRoute');
 const BrandRoute = require('./src/routes/BrandRoute');
 const RestaurantRoute = require('./src/routes/RestaurantRoute');
 const UserRoute = require('./src/routes/UserRoute');
@@ -82,6 +82,7 @@ app.get(
     function (req, res) {}
 );
 // app.use('/api/', UserRoute);
+app.use(DashboardRoute);
 app.use(BrandRoute);
 app.use(UserRoute);
 app.use(RestaurantRoute);

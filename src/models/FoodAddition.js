@@ -13,6 +13,10 @@ const foodAdditionSchema = new Schema({
     additionalDetail: {
         type: String,
     },
+    amount: {
+        type: Number,
+        default: 1,
+    },
     menuId: {
         type: mongoose.Types.ObjectId,
     },

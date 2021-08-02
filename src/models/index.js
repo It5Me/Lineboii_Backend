@@ -1,8 +1,10 @@
+require('./Promotion');
+require('./PromotionSet');
+require('./Menu');
 require('./FoodAddition');
 require('./Food');
 require('./FoodCategory');
-require('./Menu');
-require('./Profile');
 require('./Restaurant');
-require('./User');
 require('./Brand');
+require('./Profile');
+require('./User');

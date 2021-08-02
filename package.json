@@ -19,6 +19,7 @@
         "express": "^4.17.1",
         "express-session": "^1.17.2",
         "mongoose": "^5.13.2",
+        "mongoose-delete": "^0.5.3",
         "passport": "^0.4.1",
         "passport-line": "^0.0.4"
     },

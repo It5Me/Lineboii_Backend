@@ -22,13 +22,14 @@ module.exports.restaurant_home_get = async (req, res) => {
 };
 module.exports.restaurant_trending_get = async (req, res) => {
     const limit = Number.parseInt(req.query.limit);
+
     try {
         const restaurantsTrending = await Restaurant.find(
             {},
             { name: 1, restaurantImageURL: 1, overallScore: 1 },
             { sort: { field: 'asc', overallScore: -1 }, limit: limit }
         );
-        console.log(restaurantsTrending);
+        // console.log(restaurantsTrending);
         return res.status(200).json({ status: true, message: restaurantsTrending });
     } catch (error) {
         console.log(error);
@@ -50,12 +51,13 @@ module.exports.restaurant_recommend_get = async (req, res) => {
         return res.status(400).json({ status: false, message: error.message });
     }
 };
+
 module.exports.restaurant_food_get = async (req, res) => {
     const nameRestaurant = req.query.nameRestaurant;
     let message = '';
     // console.log('nameRestaurant', nameRestaurant);
     try {
-        const dataRestaurant = await Restaurant.findOne({ name: nameRestaurant }, {}, {})
+        await Restaurant.findOne({ name: nameRestaurant })
             .populate({
                 path: 'foodCategoriesId',
                 model: 'foodcategory',
@@ -67,7 +69,7 @@ module.exports.restaurant_food_get = async (req, res) => {
                     populate: {
                         path: 'foodAdditionId',
                         model: 'foodaddition',
-                        select: 'title type menuId additionalDetail',
+                        select: 'title type amount additionalDetail',
                         populate: {
                             path: 'menuId',
                             model: 'menu',
@@ -84,7 +86,7 @@ module.exports.restaurant_food_get = async (req, res) => {
 
         return res.status(200).json({
             status: true,
-            message: dataRestaurant,
+            message: message,
         });
     } catch (error) {
         console.log('error');
