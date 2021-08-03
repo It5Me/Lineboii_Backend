@@ -13,6 +13,14 @@ const foodSchema = new Schema({
     price: {
         type: Number,
     },
+    additionalDetail: {
+        type: String,
+        default: 'รายละเอียดเพิ่มเติม',
+    },
+    amount: {
+        type: Number,
+        default: 1,
+    },
     foodAdditionId: {
         type: mongoose.Types.ObjectId,
     },

@@ -10,13 +10,7 @@ const foodAdditionSchema = new Schema({
         enum: ['choice', 'checkbox'],
         default: 'checkbox',
     },
-    additionalDetail: {
-        type: String,
-    },
-    amount: {
-        type: Number,
-        default: 1,
-    },
+
     menuId: {
         type: mongoose.Types.ObjectId,
     },
