@@ -15,6 +15,7 @@ const DashboardRoute = require('./src/routes/DashboardRoute');
 const BrandRoute = require('./src/routes/BrandRoute');
 const RestaurantRoute = require('./src/routes/RestaurantRoute');
 const UserRoute = require('./src/routes/UserRoute');
+const PromotionRoute = require('./src/routes/PromotionRoute');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -82,8 +83,11 @@ app.get(
     function (req, res) {}
 );
 // app.use('/api/', UserRoute);
+app.use(PromotionRoute);
 app.use(DashboardRoute);
 app.use(BrandRoute);
 app.use(UserRoute);
 app.use(RestaurantRoute);
-app.listen(config.PORT, () => console.log(`Server RUNNING ON PORT ${config.PORT}`));
+app.listen(config.PORT, () => {
+    console.log(`Server RUNNING ON PORT ${config.PORT}`);
+});
