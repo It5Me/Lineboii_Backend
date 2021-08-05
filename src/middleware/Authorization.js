@@ -2,27 +2,28 @@ const mongoose = require('mongoose');
 const User = mongoose.model('user');
 const Authorization = async (req, res, next) => {
     let accessToken;
-    // console.log(req.body);
-    console.log('Authorization');
+
     try {
+        // console.log(req.headers);
         if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
             accessToken = req.headers.authorization.split(' ')[1];
             console.log('accessToken ', accessToken);
-        }
-    } catch (err) {
-        console.log(err);
-    }
+            console.log(accessToken);
 
-    try {
-        const currentUser = await User.findOne({ accessToken }).populate({
-            path: 'profile_id',
-            model: 'profile',
-            select: 'userId displayName pictureUrl statusMessage',
-        });
-        console.log('user', currentUser);
-        req.user = currentUser;
-        // console.log('currentUser Authorization', req.user);
-        next();
+            const currentUser = await User.findOne({ accessToken });
+            // .populate({
+            //     path: 'profile_id',
+            //     model: 'profile',
+            //     select: 'userId displayName pictureUrl statusMessage',
+            // });
+            console.log('user', currentUser);
+            req.user = currentUser;
+            // console.log('currentUser Authorization', req.user);
+            next();
+        } else {
+            console.log('No headers');
+            res.status(401).send('UnAuthorization');
+        }
     } catch (error) {
         console.log(error.message);
     }

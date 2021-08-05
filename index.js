@@ -38,7 +38,7 @@ passport.use(
         {
             channelID: config.LINE_CHANNEL_ID,
             channelSecret: config.LINE_CHANNEL_SECRET,
-            callbackURL: 'https://shrouded-plains-45055.herokuapp.com/auth/line/callback',
+            callbackURL: 'https://4dbd33cd0d43.ngrok.io/auth/line/callback',
         },
         function (accessToken, refreshToken, profile, done) {
             console.log('accessTokenn', accessToken);
@@ -84,11 +84,12 @@ app.get(
     function (req, res) {}
 );
 // app.use('/api/', UserRoute);
-app.use(PromotionRoute);
+// app.use(PromotionRoute);
 app.use(DashboardRoute);
 app.use(BrandRoute);
 app.use(UserRoute);
 app.use(RestaurantRoute);
 app.listen(config.PORT, () => {
     console.log(`Server RUNNING ON PORT ${config.PORT}`);
+    // console.log(config);
 });
