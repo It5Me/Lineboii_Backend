@@ -41,17 +41,18 @@ passport.use(
             callbackURL: 'https://shrouded-plains-45055.herokuapp.com/auth/line/callback',
         },
         function (accessToken, refreshToken, profile, done) {
-            console.log('accessToken', accessToken);
+            console.log('accessTokenn', accessToken);
             console.log('refreshToken', refreshToken);
             console.log('profile', profile.id);
             const newProfile = new Profile(profile);
-            newProfile.save((err, profile) => {
+            newProfile.save(async (err, profile) => {
                 const newUser = new User({
                     accessToken,
                     refreshToken,
                     profile_id: profile,
                 });
-                newUser.save();
+                console.log('done');
+                await newUser.save();
             });
 
             // asynchronous verification, for effect...
@@ -68,7 +69,7 @@ passport.use(
 );
 // //when use req.body
 
-//ไอเขียวหน้าล็อคอิน
+//หน้าล็อคอิน
 app.get('/auth/line', passport.authenticate('line'), function (req, res) {
     // The request will be redirected to LINE for authentication, so this
     // function will not be called.4
