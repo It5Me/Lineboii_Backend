@@ -38,32 +38,47 @@ passport.use(
         {
             channelID: config.LINE_CHANNEL_ID,
             channelSecret: config.LINE_CHANNEL_SECRET,
-            callbackURL: 'https://shrouded-plains-45055.herokuapp.com/auth/line/callback',
+            callbackURL: 'https://4dbd33cd0d43.ngrok.io/auth/line/callback',
         },
-        function (accessToken, refreshToken, profile, done) {
-            console.log('accessTokenn', accessToken);
-            console.log('refreshToken', refreshToken);
-            console.log('profile', profile.id);
-            const newProfile = new Profile(profile);
-            newProfile.save(async (err, profile) => {
+        async function (accessToken, refreshToken, profile, done) {
+            // console.log('accessTokenn', accessToken);
+            // console.log('refreshToken', refreshToken);
+            // console.log('profile', profile);
+
+            const currentProfile = await Profile.findOne({ userId: profile.id });
+            if (currentProfile) {
+                const currentUser = await User.findOne({ profile_id: currentProfile._id });
+                currentUser.set({
+                    accessToken,
+                    refreshToken,
+                });
+                await currentUser.save();
+                currentProfile.set(profile._json);
+                await currentProfile.save();
+                console.log('Update Profile');
+                return done(null, currentProfile);
+            } else {
+                console.log('create new Profile');
+                const newProfile = new Profile(profile._json);
+                await newProfile.save();
                 const newUser = new User({
                     accessToken,
                     refreshToken,
-                    profile_id: profile,
+                    profile_id: newProfile,
                 });
                 console.log('done');
                 await newUser.save();
-            });
-
+                return done(null, newProfile);
+            }
             // asynchronous verification, for effect...
-            process.nextTick(function () {
-                // To keep the example simple, the user's LINE profile is returned to
-                // represent the logged-in user.  In a typical application, you would want
-                // to associate the LINE account with a user record in your database,
-                // and return that user instead.
+            // process.nextTick(function () {
+            // To keep the example simple, the user's LINE profile is returned to
+            // represent the logged-in user.  In a typical application, you would want
+            // to associate the LINE account with a user record in your database,
+            // and return that user instead.
 
-                return done(null, profile);
-            });
+            // return done(null, profile);
+            // });
         }
     )
 );
@@ -73,6 +88,7 @@ passport.use(
 app.get('/auth/line', passport.authenticate('line'), function (req, res) {
     // The request will be redirected to LINE for authentication, so this
     // function will not be called.4
+    console.log(req.headers);
 });
 //check ว่า ล็อคอินได้ไหม
 app.get(

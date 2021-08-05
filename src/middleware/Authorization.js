@@ -22,7 +22,7 @@ const Authorization = async (req, res, next) => {
             next();
         } else {
             console.log('No headers');
-            res.status(401).send('UnAuthorization');
+            res.status(401).send('unauthorization');
         }
     } catch (error) {
         console.log(error.message);
