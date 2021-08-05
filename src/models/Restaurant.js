@@ -5,6 +5,19 @@ const restaurantSchema = new Schema({
         type: String,
         require: [true, 'Please provide a username '],
     },
+    timeDelivery: {
+        type: String,
+    },
+    deliveryPrice: {
+        type: Number,
+    },
+    announcement: {
+        type: String,
+    },
+    supportedTypes: {
+        type: String,
+        enum: ['freeDelivery', 'allowCreditCard', 'promotion'],
+    },
     isOfficial: {
         type: Boolean,
         require: true,

@@ -97,3 +97,5 @@ module.exports.restaurant_food_get = async (req, res) => {
         });
     }
 };
+
+module.exports.restaurant_create = (req, res) => {};

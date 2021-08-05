@@ -65,7 +65,7 @@ module.exports.promotionSet_create = async (req, res) => {
             });
             await promotionSet.save();
             console.log('save', promotionSet);
-            // fetchPromotiontoday();
+            fetchPromotiontoday();
             res.send(promotionSet);
         } else {
             res.status(404).send('Promotion Not Found');
@@ -85,7 +85,13 @@ const fetchPromotiontoday = async () => {
         path: 'selectPromotion',
         model: 'promotion',
         select: 'title',
+        populate: {
+            path: 'restaurantId',
+            model: 'restaurant',
+            select: 'name restaurantImageURL',
+        },
     });
+    console.log(promotionToday);
 };
 fetchPromotiontoday();
 module.exports.promotionSetToday_get = async (req, res) => {

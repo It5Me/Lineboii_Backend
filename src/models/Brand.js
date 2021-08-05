@@ -61,4 +61,5 @@ const brandSchema = new Schema({
 //     restaurants: restaurant._id,
 // });
 // brand.save();
+// console.log(brand);
 mongoose.model('brand', brandSchema);
