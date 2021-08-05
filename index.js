@@ -38,7 +38,7 @@ passport.use(
         {
             channelID: config.LINE_CHANNEL_ID,
             channelSecret: config.LINE_CHANNEL_SECRET,
-            callbackURL: 'https://4dbd33cd0d43.ngrok.io/auth/line/callback',
+            callbackURL: 'https://shrouded-plains-45055.herokuapp.com/auth/line/callback',
         },
         function (accessToken, refreshToken, profile, done) {
             console.log('accessTokenn', accessToken);
