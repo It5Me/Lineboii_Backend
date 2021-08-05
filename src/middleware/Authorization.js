@@ -7,7 +7,7 @@ const Authorization = async (req, res, next) => {
     try {
         if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
             accessToken = req.headers.authorization.split(' ')[1];
-            // console.log('accessToken ', accessToken);
+            console.log('accessToken ', accessToken);
         }
     } catch (err) {
         console.log(err);
@@ -24,7 +24,7 @@ const Authorization = async (req, res, next) => {
         // console.log('currentUser Authorization', req.user);
         next();
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
     }
 };
 
