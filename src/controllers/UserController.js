@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
-// const User = mongoose.model('user');
-const userSchema = require('../models/User');
-// const profile = require('../models/Profile');
+const User = mongoose.model('user');
 module.exports.user_post = (req, res, next) => {
     console.log('req user post', req.body);
 

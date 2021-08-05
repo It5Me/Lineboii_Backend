@@ -19,7 +19,7 @@ const Authorization = async (req, res, next) => {
             model: 'profile',
             select: 'userId displayName pictureUrl statusMessage',
         });
-        // console.log('user', currentUser.profile_id.displayName);
+        console.log('user', currentUser);
         req.user = currentUser;
         // console.log('currentUser Authorization', req.user);
         next();

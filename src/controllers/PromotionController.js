@@ -77,21 +77,26 @@ module.exports.promotionSet_create = async (req, res) => {
 };
 global.promotionToday = null;
 const fetchPromotiontoday = async () => {
-    promotionToday = await PromotionSet.find(
-        // active<now<expire
-        { active: { $lte: new Date() }, expireIn: { $gte: new Date() }, disable: false },
-        { selectPromotion: 1 }
-    ).populate({
-        path: 'selectPromotion',
-        model: 'promotion',
-        select: 'title',
-        populate: {
-            path: 'restaurantId',
-            model: 'restaurant',
-            select: 'name restaurantImageURL',
-        },
-    });
-    console.log(promotionToday);
+    try {
+        promotionToday = await PromotionSet.find(
+            // active<now<expire
+            { active: { $lte: new Date() }, expireIn: { $gte: new Date() }, disable: false },
+            { selectPromotion: 1 }
+        ).populate({
+            path: 'selectPromotion',
+            model: 'promotion',
+            select: 'title',
+            populate: {
+                path: 'restaurantId',
+                model: 'restaurant',
+                select: 'name restaurantImageURL',
+            },
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    // console.log(promotionToday);
 };
 fetchPromotiontoday();
 module.exports.promotionSetToday_get = async (req, res) => {

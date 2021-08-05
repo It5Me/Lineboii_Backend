@@ -8,6 +8,7 @@ const session = require('express-session');
 const cors = require('cors');
 require('./src/models');
 const mongoose = require('mongoose');
+connectDB();
 const User = mongoose.model('user');
 const Profile = mongoose.model('profile');
 const app = express();
@@ -24,7 +25,6 @@ app.use(cors());
 app.use(session({ secret: config.SESSION_SECRET }));
 app.use(passport.initialize());
 app.use(passport.session());
-connectDB();
 passport.serializeUser(function (user, done) {
     done(null, user);
 });
@@ -41,9 +41,9 @@ passport.use(
             callbackURL: 'https://shrouded-plains-45055.herokuapp.com/auth/line/callback',
         },
         function (accessToken, refreshToken, profile, done) {
-            // console.log('accessToken', accessToken);
-            // console.log('refreshToken', refreshToken);
-            // console.log('profile', profile.id);
+            console.log('accessToken', accessToken);
+            console.log('refreshToken', refreshToken);
+            console.log('profile', profile.id);
             const newProfile = new Profile(profile);
             newProfile.save((err, profile) => {
                 const newUser = new User({
