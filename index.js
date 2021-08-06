@@ -38,7 +38,7 @@ passport.use(
         {
             channelID: config.LINE_CHANNEL_ID,
             channelSecret: config.LINE_CHANNEL_SECRET,
-            callbackURL: 'https://4dbd33cd0d43.ngrok.io/auth/line/callback',
+            callbackURL: 'https://ebb9fb70d035.ngrok.io/auth/line/callback',
         },
         async function (accessToken, refreshToken, profile, done) {
             // console.log('accessTokenn', accessToken);
@@ -56,7 +56,8 @@ passport.use(
                 currentProfile.set(profile._json);
                 await currentProfile.save();
                 console.log('Update Profile');
-                return done(null, currentProfile);
+                // ตัวที่จะส่งผ่าน req.user
+                return done(null, currentUser);
             } else {
                 console.log('create new Profile');
                 const newProfile = new Profile(profile._json);
@@ -91,8 +92,10 @@ app.get('/auth/line', passport.authenticate('line'), function (req, res) {
     console.log(req.headers);
 });
 //check ว่า ล็อคอินได้ไหม
+
 app.get(
     '/auth/line/callback',
+
     passport.authenticate('line', {
         failureRedirect: '/login',
         successRedirect: '/user',
@@ -100,7 +103,7 @@ app.get(
     function (req, res) {}
 );
 // app.use('/api/', UserRoute);
-// app.use(PromotionRoute);
+app.use(PromotionRoute);
 app.use(DashboardRoute);
 app.use(BrandRoute);
 app.use(UserRoute);

@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Restaurant = mongoose.model('restaurant');
-const Food = mongoose.model('food');
 const { inspect } = require('util');
 
 module.exports.restaurant_home_get = async (req, res) => {
@@ -98,4 +97,14 @@ module.exports.restaurant_food_get = async (req, res) => {
     }
 };
 
-module.exports.restaurant_create = (req, res) => {};
+// module.exports.restaurant_create = (req, res) => {};
+
+module.exports.get_restaurant = async (req, res) => {
+    const nameRestaurant = req.query.nameres;
+    try {
+        const getRestaurants = await Restaurant.findOne({ name: nameRestaurant });
+        res.send(getRestaurants);
+    } catch (error) {
+        console.log(error);
+    }
+};

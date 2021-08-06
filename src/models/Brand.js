@@ -3,8 +3,12 @@ const Schema = mongoose.Schema;
 const brandSchema = new Schema({
     name: {
         type: String,
+        unique: true,
     },
-    restaurants: {
+    brandImageURL: {
+        type: String,
+    },
+    restaurantId: {
         type: mongoose.Types.ObjectId,
     },
 });
