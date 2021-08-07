@@ -1,15 +1,18 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const brandSchema = new Schema({
-    name: {
+    brandName: {
         type: String,
         unique: true,
+        required: [true, 'Please enter name of brand'],
     },
     brandImageURL: {
         type: String,
+        required: [true, 'Please enter brandImageURL of brand'],
     },
     restaurantId: {
-        type: mongoose.Types.ObjectId,
+        type: [mongoose.Types.ObjectId],
+        unique: false,
     },
 });
 

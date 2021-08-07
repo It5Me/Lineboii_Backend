@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model('user');
 const Authorization = async (req, res, next) => {
     let accessToken;
-    console.log('reqAuthorizationfromLine', req.user);
+    // console.log('reqAuthorizationfromLine', req.user);
     try {
         // console.log(req.headers);
         if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
@@ -16,7 +16,7 @@ const Authorization = async (req, res, next) => {
             //     model: 'profile',
             //     select: 'userId displayName pictureUrl statusMessage',
             // });
-            console.log('userHeadersSetInPostman', currentUser);
+            // console.log('userHeadersSetInPostman', currentUser);
             req.user = currentUser;
             // console.log('currentUser Authorization', req.user);
             next();
