@@ -5,7 +5,7 @@ const Restaurant = mongoose.model('restaurant');
 module.exports.brandList_get = async (req, res) => {
     const limit = Number.parseInt(req.query.limit);
     try {
-        const brandsRestaurant = await Brand.find({}, {}, { limit: limit });
+        const brandsRestaurant = await Brand.find({}, { restaurantId: 0 }, { limit: limit });
         console.log(brandsRestaurant);
         return res.status(200).json({ status: true, message: brandsRestaurant });
     } catch (error) {
