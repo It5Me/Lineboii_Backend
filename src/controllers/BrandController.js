@@ -1,7 +1,7 @@
-const { response } = require('express');
 const mongoose = require('mongoose');
 const Brand = mongoose.model('brand');
 const Restaurant = mongoose.model('restaurant');
+const { inspect } = require('util');
 module.exports.brandList_get = async (req, res) => {
     const limit = Number.parseInt(req.query.limit);
     try {
@@ -62,15 +62,29 @@ module.exports.brand_create = async (req, res) => {
     }
 };
 module.exports.brand_put = async (req, res) => {
+    // let message = '';
     try {
-        const getBrand = await Brand.findOne({ brandName: req.body.brandName });
-        console.log(getBrand);
+        const getBrand = await Brand.findOne({ brandName: req.query.brandName });
+        console.log('getBrand', getBrand);
         if (getBrand) {
             const newrestaurantId = req.body.restaurantId;
+            const newBrandName = req.body.brandName;
+            const newImageURL = req.body.brandImageURL;
             console.log('id', getBrand._id);
             console.log('newrestaurantId', newrestaurantId);
-            Brand.findByIdAndUpdate(getBrand._id, { $push: { restaurantId: newrestaurantId } }).exec();
-            res.send('update new restaurant');
+            await Brand.findByIdAndUpdate(getBrand._id, {
+                $set: { brandName: newBrandName, brandImageURL: newImageURL },
+                $addToSet: { restaurantId: newrestaurantId },
+            }).exec(function (err, docs) {
+                const data = docs;
+                return res.status(200).json({
+                    status: true,
+                    message: 'Updata Brand Complete',
+                    data: data,
+                });
+            });
+        } else {
+            res.status(400).send('Invalid BrandName');
         }
     } catch (error) {
         console.log(error);
