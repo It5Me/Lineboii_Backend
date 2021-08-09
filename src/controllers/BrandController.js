@@ -97,7 +97,7 @@ module.exports.brand_restaurantList_get = async (req, res) => {
         return res.status(404).json({ status: false, message: 'Brandname undefined' });
     }
     try {
-        const brandRestaurants = await Brand.findOne({ brandName: brandName }, { restaurantId: 1 });
+        const brandRestaurants = await Brand.findOne({ brandName: brandName }, { restaurantId: 1, brandName: 1 });
         // console.log(brandRestaurants.restaurantId[0]);
         // console.log(brandRestaurants);
         console.log(brandRestaurants.restaurantId);
@@ -110,7 +110,7 @@ module.exports.brand_restaurantList_get = async (req, res) => {
 
         // console.log(brandRestaurants);
 
-        return res.status(200).json({ status: true, message: restaurant });
+        return res.status(200).json({ status: true, brandName: brandRestaurants.brandName, message: restaurant });
     } catch (error) {
         console.log(error);
         return res.status(400).json({

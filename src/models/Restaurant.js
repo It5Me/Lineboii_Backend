@@ -22,11 +22,11 @@ const restaurantSchema = new Schema({
         type: Boolean,
         require: true,
     },
-    dailyCloseTime: {
+    dailyOpenTime: {
         type: String,
         require: true,
     },
-    dailyOpenTime: {
+    dailyCloseTime: {
         type: String,
         require: true,
     },
@@ -43,7 +43,7 @@ const restaurantSchema = new Schema({
         require: true,
     },
     foodCategoriesId: {
-        type: mongoose.Types.ObjectId,
+        type: [mongoose.Types.ObjectId],
     },
     myScore: {
         type: Number,
