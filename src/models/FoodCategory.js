@@ -6,7 +6,7 @@ const foodCategorySchema = new Schema({
         type: String,
     },
     foodId: {
-        type: mongoose.Types.ObjectId,
+        type: [mongoose.Types.ObjectId],
     },
 });
 

@@ -22,7 +22,7 @@ const foodSchema = new Schema({
         default: 1,
     },
     foodAdditionId: {
-        type: mongoose.Types.ObjectId,
+        type: [mongoose.Types.ObjectId],
     },
 });
 

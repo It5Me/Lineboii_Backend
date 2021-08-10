@@ -4,6 +4,7 @@ const restaurantSchema = new Schema({
     name: {
         type: String,
         require: [true, 'Please provide a username '],
+        unique: true,
     },
     timeDelivery: {
         type: String,

@@ -17,6 +17,7 @@ const BrandRoute = require('./src/routes/BrandRoute');
 const RestaurantRoute = require('./src/routes/RestaurantRoute');
 const UserRoute = require('./src/routes/UserRoute');
 const PromotionRoute = require('./src/routes/PromotionRoute');
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

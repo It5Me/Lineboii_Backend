@@ -97,7 +97,12 @@ module.exports.restaurant_food_get = async (req, res) => {
     }
 };
 
-// module.exports.restaurant_create = (req, res) => {};
+module.exports.restaurant_create = (req, res) => {
+    try {
+    } catch (error) {
+        console.log(err);
+    }
+};
 
 module.exports.get_restaurant = async (req, res) => {
     const nameRestaurant = req.query.nameres;
