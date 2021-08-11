@@ -8,7 +8,8 @@ router.get('/restaurants/trending', Authorization, RestaurantController.restaura
 router.get('/restaurants/recommend', Authorization, RestaurantController.restaurant_recommend_get);
 router.get('/restaurant/food', Authorization, RestaurantController.restaurant_food_get);
 router.get('/getrestaurant', RestaurantController.get_restaurant);
-router.get('/restaurant/foods', FoodController.restaurant_foods_get);
+// router.get('/restaurant/foods', FoodController.restaurant_foods_get);
+router.get('/test', RestaurantController.test_get);
 module.exports = router;
 
 // new

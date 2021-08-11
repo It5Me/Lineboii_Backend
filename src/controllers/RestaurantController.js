@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Restaurant = mongoose.model('restaurant');
 const { inspect } = require('util');
-
+const FoodController = require('../controllers/FoodController');
 module.exports.restaurant_home_get = async (req, res) => {
     const user = req.user;
     const limit = Number.parseInt(req.query.limit);
@@ -13,7 +13,8 @@ module.exports.restaurant_home_get = async (req, res) => {
         const restaurants = await Restaurant.find({}, { name: 1, restaurantImageURL: 1 }, { limit: limit });
 
         console.log('restaurantData', restaurants);
-        res.status(200).json({ status: true, message: restaurants });
+        // res.status(200).json({ status: true, message: restaurants });
+        res.send(food);
     } catch (error) {
         console.log(error);
         return res.status(400).json({ status: false, message: error.message });
