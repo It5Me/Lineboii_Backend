@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-const FoodAddition = mongoose.model('foodaddition');
-const Restaurant = mongoose.model('restaurant');
+
 const FoodCategory = mongoose.model('foodcategory');
 module.exports.foodCategory_create = async (req, res) => {
     const newfoodId = req.body.foodId ? req.body.foodId : null;
@@ -23,3 +22,4 @@ module.exports.foodCategory_create = async (req, res) => {
         res.status(400).send(error.message);
     }
 };
+module.exports.foodCategory_put = async (req, res) => {};

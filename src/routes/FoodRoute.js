@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const router = Router();
-const FoodController = require('../controllers/FoodController');
-router.post('/foodcategory/create', FoodController.foodCategory_create);
+const FoodCategoryController = require('../controllers/FoodCategoryController');
+router.post('/foodcategory/create', FoodCategoryController.foodCategory_create);
 
 module.exports = router;

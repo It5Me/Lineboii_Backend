@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Restaurant = mongoose.model('restaurant');
 const { inspect } = require('util');
-const FoodController = require('../controllers/FoodController');
+const FoodController = require('./FoodCategoryController');
 module.exports.restaurant_home_get = async (req, res) => {
     const user = req.user;
     const limit = Number.parseInt(req.query.limit);

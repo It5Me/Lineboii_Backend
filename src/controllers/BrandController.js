@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Brand = mongoose.model('brand');
 const Restaurant = mongoose.model('restaurant');
 const { inspect } = require('util');
+
 module.exports.brandList_get = async (req, res) => {
     const limit = Number.parseInt(req.query.limit);
     try {
@@ -63,26 +64,47 @@ module.exports.brand_create = async (req, res) => {
 };
 module.exports.brand_put = async (req, res) => {
     // let message = '';
+    const newrestaurantId = req.body.restaurantId ? req.body.restaurantId : null;
+    const newBrandName = req.body.brandName ? req.body.brandName : null;
+    const newImageURL = req.body.brandImageURL ? req.body.brandImageURL : null;
     try {
         const getBrand = await Brand.findOne({ brandName: req.query.brandName });
         console.log('getBrand', getBrand);
         if (getBrand) {
-            const newrestaurantId = req.body.restaurantId;
-            const newBrandName = req.body.brandName;
-            const newImageURL = req.body.brandImageURL;
-            console.log('id', getBrand._id);
-            console.log('newrestaurantId', newrestaurantId);
-            await Brand.findByIdAndUpdate(getBrand._id, {
-                $set: { brandName: newBrandName, brandImageURL: newImageURL },
-                $addToSet: { restaurantId: newrestaurantId },
-            }).exec(function (err, docs) {
-                const data = docs;
-                return res.status(200).json({
-                    status: true,
-                    message: 'Updata Brand Complete',
-                    data: data,
+            if (newBrandName && newImageURL && newrestaurantId) {
+                console.log('id', getBrand._id);
+                console.log('newrestaurantId', newrestaurantId);
+                await Brand.findByIdAndUpdate(getBrand._id, {
+                    $set: { brandName: newBrandName, brandImageURL: newImageURL },
+                    $addToSet: { restaurantId: newrestaurantId },
+                }).exec(function (err, docs) {
+                    // const data = docs;
+                    // console.log('data', data);
+                    // console.log('remove', removeNull(data));
+                    // const rmnulldata = removeNull(data);
+                    // console.log(rmnulldata);
+                    return res.status(200).json({
+                        status: true,
+                        message: 'Updata Brand Complete',
+                    });
                 });
-            });
+            } else if (newBrandName && newImageURL) {
+                await Brand.findByIdAndUpdate(getBrand._id, {
+                    $set: { brandName: newBrandName, brandImageURL: newImageURL },
+                }).exec(function (err, docs) {
+                    // const data = docs;
+                    // console.log('data', data);
+                    // console.log('remove', removeNull(data));
+                    // const rmnulldata = removeNull(data);
+                    // console.log(rmnulldata);
+                    return res.status(200).json({
+                        status: true,
+                        message: 'Updata Brand Complete',
+                    });
+                });
+            } else {
+                return res.send('Please enter brandName and brandImageURL');
+            }
         } else {
             res.status(400).send('Invalid BrandName');
         }
@@ -119,3 +141,9 @@ module.exports.brand_restaurantList_get = async (req, res) => {
         });
     }
 };
+// function removeNull(obj) {
+//     return Object.entries(obj).reduce((output, [key, val]) => {
+//         if (val) output[key] = typeof val === 'object' ? removeNull(val) : val;
+//         return output;
+//     }, {});
+// }
