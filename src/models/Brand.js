@@ -12,7 +12,6 @@ const brandSchema = new Schema({
     },
     restaurantId: {
         type: [mongoose.Types.ObjectId],
-        unique: true,
     },
 });
 

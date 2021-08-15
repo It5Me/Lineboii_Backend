@@ -39,7 +39,7 @@ passport.use(
         {
             channelID: config.LINE_CHANNEL_ID,
             channelSecret: config.LINE_CHANNEL_SECRET,
-            callbackURL: 'https://ebb9fb70d035.ngrok.io/auth/line/callback',
+            callbackURL: 'https://c7167e8f67d9.ngrok.io/auth/line/callback',
         },
         async function (accessToken, refreshToken, profile, done) {
             // console.log('accessTokenn', accessToken);

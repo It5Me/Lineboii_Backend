@@ -88,23 +88,6 @@ module.exports.brand_put = async (req, res) => {
             //             message: 'Updata Brand Complete',
             //         });
             //     });
-            // } else if (newBrandName && newImageURL) {
-            //     await Brand.findByIdAndUpdate(getBrand._id, {
-            //         $set: { brandName: newBrandName, brandImageURL: newImageURL },
-            //     }).exec(function (err, docs) {
-            //         // const data = docs;
-            //         // console.log('data', data);
-            //         // console.log('remove', removeNull(data));
-            //         // const rmnulldata = removeNull(data);
-            //         // console.log(rmnulldata);
-            //         return res.status(200).json({
-            //             status: true,
-            //             message: 'Updata Brand Complete',
-            //         });
-            //     });
-            // } else {
-            //     return res.send('Please enter brandName and brandImageURL');
-            // }
             await Brand.findByIdAndUpdate(getBrand._id, req.body);
             return res.status(200).json({
                 status: true,
@@ -118,23 +101,34 @@ module.exports.brand_put = async (req, res) => {
     }
 };
 module.exports.brand_restaurantId_put = async (req, res) => {
+    let exist = false;
+    console.log('req', req.body.restaurantId);
     try {
-        await Brand.findByIdAndUpdate(
-            req.params.id,
-            { $addToSet: { restaurantId: req.body.restaurantId } },
-            { new: true },
-            function (err, doc) {
-                if (!doc) {
-                    res.send('Not Found Brand');
-                } else {
-                    res.send(doc.restaurantId);
-                }
-                // data = doc.restaurantId;
-                // console.log('doc', doc.restaurantId);
+        const brand = await Brand.findById(req.params.id);
+        // if (!doc) {
+        //     return res.send('Not Found Brand');
+        // }
+        // else {
+        //     res.send(doc.restaurantId);
+        // }
+        // data = doc.restaurantId;
+        // console.log('doc', doc.restaurantId);
+        brand.restaurantId.map((value) => {
+            console.log(value);
+            if (req.body.restaurantId === String(value)) {
+                console.log('hey');
+                // return res.send('dup');
+                exist = true;
             }
-        );
+        });
+        if (exist) {
+            res.send('brand already exist');
+        } else {
+            await Brand.updateOne({ _id: req.params.id }, { $push: { restaurantId: req.body.restaurantId } });
+            res.send('update restaurantId');
+        }
     } catch (error) {
-        res.send(error.message);
+        return res.send(error.message);
     }
 };
 module.exports.brand_restaurantList_get = async (req, res) => {
@@ -166,9 +160,3 @@ module.exports.brand_restaurantList_get = async (req, res) => {
         });
     }
 };
-// function removeNull(obj) {
-//     return Object.entries(obj).reduce((output, [key, val]) => {
-//         if (val) output[key] = typeof val === 'object' ? removeNull(val) : val;
-//         return output;
-//     }, {});
-// }
