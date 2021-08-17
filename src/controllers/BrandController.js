@@ -19,8 +19,6 @@ module.exports.brand_get = async (req, res) => {
     const brandName = req.query.brandName;
     try {
         const brandRestaurants = await Brand.find({ brandName: brandName });
-        // console.log(brandRestaurants.restaurantId[0]);
-        // console.log(brandRestaurants);
 
         if (!brandRestaurants.length) {
             return res.status(404).json({ status: false, message: 'Invalid Brandname' });

@@ -11,8 +11,7 @@ module.exports.menu_get = async (req, res) => {
 };
 module.exports.menu_create = async (req, res) => {
     try {
-        const newMenu = await Menu.create({ name: req.body.name, price: req.body.price });
-        await newMenu.save();
+        const newMenu = await Menu.create(req.body);
         res.status(200).send(newMenu);
     } catch (error) {
         console.log(error);

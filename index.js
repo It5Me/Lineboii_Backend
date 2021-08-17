@@ -19,6 +19,7 @@ const UserRoute = require('./src/routes/UserRoute');
 const PromotionRoute = require('./src/routes/PromotionRoute');
 const FoodRoute = require('./src/routes/FoodRoute');
 const MenuRoute = require('./src/routes/MenuRoute');
+const FoodAddtionRoute = require('./src/routes/FoodAdditionRoute');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -110,6 +111,7 @@ app.use(PromotionRoute);
 app.use(DashboardRoute);
 app.use(BrandRoute);
 app.use(MenuRoute);
+app.use(FoodAddtionRoute);
 app.use(FoodRoute);
 app.use(RestaurantRoute);
 app.listen(config.PORT, () => {

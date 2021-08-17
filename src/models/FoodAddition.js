@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const menuSchema = require('./Menu');
 const foodAdditionSchema = new Schema({
     title: {
         type: String,
         unique: true,
-        requir,
+        required: [true, 'Please enter title'],
     },
     subtitle: {
         type: String,
+        required: [true, 'Please enter subtitle'],
     },
     type: {
         type: String,
@@ -17,6 +17,7 @@ const foodAdditionSchema = new Schema({
     },
     menus: {
         type: [mongoose.Types.ObjectId],
+        unique: true,
     },
 });
 mongoose.model('foodaddition', foodAdditionSchema);
