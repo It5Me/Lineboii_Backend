@@ -4,14 +4,18 @@ const menuSchema = require('./Menu');
 const foodAdditionSchema = new Schema({
     title: {
         type: String,
+        unique: true,
+        requir,
+    },
+    subtitle: {
+        type: String,
     },
     type: {
         type: String,
         enum: ['choice', 'checkbox'],
         default: 'checkbox',
     },
-
-    menuId: {
+    menus: {
         type: [mongoose.Types.ObjectId],
     },
 });

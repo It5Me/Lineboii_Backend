@@ -114,19 +114,12 @@ module.exports.brand_restaurantList_get = async (req, res) => {
                 select: 'name deliveryPrice distance restaurantImageURL supportedTypes isOfficial',
             })
             .exec();
-        // console.log(brandRestaurants.restaurantId[0]);
         console.log(brandRestaurants);
-        // console.log(brandRestaurants.restaurantId);
-        // if (!brandRestaurants) {
-        //     return res.status(404).json({ status: false, message: 'Invalid Brandname' });
-        // }
         //put array
         // const restaurant = await Restaurant.find({ _id: brandRestaurants.restaurantId });
         // console.log('restaurant', restaurant);
 
-        // console.log(brandRestaurants);
-
-        return res.status(200).json({ status: true, brandName: brandRestaurants.brandName, message: brandRestaurants });
+        return res.status(200).json({ status: true, message: brandRestaurants });
     } catch (error) {
         console.log(error);
         return res.status(400).json({
