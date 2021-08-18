@@ -74,25 +74,29 @@ module.exports.add_restaurant_brand = async (req, res) => {
     let exist = false;
     console.log('req', req.body.restaurantId);
     try {
-        const brand = await Brand.findById(req.params.id);
-        brand.restaurantId.map((value) => {
-            // console.log(value);
-            if (req.body.restaurantId === String(value)) {
-                exist = true;
-            }
-        });
-        if (exist) {
-            res.status(400).send('restaurant already exist');
-        } else {
-            const brand = await Brand.findByIdAndUpdate(
-                { _id: req.params.id },
-                { $push: { restaurantId: req.body.restaurantId } },
-                { new: true }
-            );
-            res.send({
-                data: brand,
-                message: 'update restaurantId',
+        const currentbrand = await Brand.findById(req.params.id);
+        if (currentbrand) {
+            currentbrand.restaurantId.map((value) => {
+                // console.log(value);
+                if (req.body.restaurantId === String(value)) {
+                    exist = true;
+                }
             });
+            if (exist) {
+                res.status(400).send('restaurant already exist');
+            } else {
+                const brand = await Brand.findByIdAndUpdate(
+                    { _id: req.params.id },
+                    { $push: { restaurantId: req.body.restaurantId } },
+                    { new: true }
+                );
+                res.send({
+                    data: brand,
+                    message: 'update restaurantId in brand',
+                });
+            }
+        } else {
+            res.status(400).send('invalid brand');
         }
     } catch (error) {
         return res.send(error.message);
