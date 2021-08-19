@@ -53,7 +53,7 @@ module.exports.brand_create = async (req, res) => {
         return res.status(400).send(error.message);
     }
 };
-module.exports.brand_edit = async (req, res) => {
+module.exports.edit_brand = async (req, res) => {
     try {
         const getBrand = await Brand.findOne({ _id: req.params.id });
         console.log('getBrand', getBrand);

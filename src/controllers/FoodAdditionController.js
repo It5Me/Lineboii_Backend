@@ -49,3 +49,22 @@ module.exports.add_menu_foodaddition = async (req, res) => {
         console.log(error);
     }
 };
+module.exports.edit_foodaddition = async (req, res) => {
+    console.log(req.body);
+    try {
+        const getFoodAddition = await FoodAddition.findOne({ _id: req.params.id });
+        console.log('getFoodAddition', getFoodAddition);
+        if (getFoodAddition) {
+            const newFoodAddition = await FoodAddition.findByIdAndUpdate(getFoodAddition._id, req.body, { new: true });
+            console.log(newFoodAddition);
+            return res.status(200).json({
+                status: true,
+                message: 'Updata FoodAddition Complete',
+            });
+        } else {
+            res.status(400).send('Invalid FoodAddition');
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};

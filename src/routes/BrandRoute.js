@@ -5,7 +5,7 @@ const BrandController = require('../controllers/BrandController');
 router.get('/brands', Authorization, BrandController.brandList_get);
 router.get('/brand', Authorization, BrandController.brand_get);
 router.post('/brand/create', Authorization, BrandController.brand_create);
-router.put('/brand/edit/:id', BrandController.brand_edit);
+router.put('/brand/edit/:id', BrandController.edit_brand);
 router.get('/brand/restaurantlist', BrandController.brand_restaurantList_get);
 router.put('/brand/:id', BrandController.add_restaurant_brand);
 module.exports = router;
