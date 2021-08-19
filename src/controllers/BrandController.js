@@ -72,7 +72,7 @@ module.exports.edit_brand = async (req, res) => {
 };
 module.exports.add_restaurant_brand = async (req, res) => {
     let exist = false;
-    console.log('req', req.body.restaurantId);
+    console.log('req', req.body.restaurants);
     try {
         const currentbrand = await Brand.findById(req.params.id);
         if (currentbrand) {
@@ -128,5 +128,21 @@ module.exports.brand_restaurantList_get = async (req, res) => {
             status: false,
             message: error.message,
         });
+    }
+};
+module.exports.delete_brand = async (req, res) => {
+    try {
+        const brand = await Brand.findById(req.params.id);
+        if (brand) {
+            await Brand.findByIdAndRemove(req.params.id);
+            res.status(200).send({
+                status: true,
+                message: 'delete brand',
+            });
+        } else {
+            res.status(400).send({ status: false, message: 'Invalid brand' });
+        }
+    } catch (error) {
+        res.status(400).send(error.message);
     }
 };
