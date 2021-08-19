@@ -10,8 +10,9 @@ const brandSchema = new Schema({
         type: String,
         required: [true, 'Please enter brandImageURL of brand'],
     },
-    restaurantId: {
+    restaurants: {
         type: [mongoose.Types.ObjectId],
+        validate: [(v) => Array.isArray(v) && v.length > 0, 'Please enter at least one restaurant'],
         unique: true,
     },
 });

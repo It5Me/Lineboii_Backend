@@ -6,7 +6,7 @@ const { inspect } = require('util');
 module.exports.brandList_get = async (req, res) => {
     const limit = Number.parseInt(req.query.limit);
     try {
-        const brandsRestaurant = await Brand.find({}, { restaurantId: 0 }, { limit: limit });
+        const brandsRestaurant = await Brand.find({}, { restaurants: 0 }, { limit: limit });
         console.log(brandsRestaurant);
         return res.status(200).json({ status: true, message: brandsRestaurant });
     } catch (error) {
@@ -48,7 +48,7 @@ module.exports.brand_create = async (req, res) => {
         }
     } catch (error) {
         if (error.code === 11000) {
-            return res.status(400).send('restaurant already exist!');
+            return res.status(400).send('restaurant already exist');
         }
         return res.status(400).send(error.message);
     }
@@ -76,9 +76,9 @@ module.exports.add_restaurant_brand = async (req, res) => {
     try {
         const currentbrand = await Brand.findById(req.params.id);
         if (currentbrand) {
-            currentbrand.restaurantId.map((value) => {
+            currentbrand.restaurants.map((value) => {
                 // console.log(value);
-                if (req.body.restaurantId === String(value)) {
+                if (req.body.restaurants === String(value)) {
                     exist = true;
                 }
             });
@@ -87,7 +87,7 @@ module.exports.add_restaurant_brand = async (req, res) => {
             } else {
                 const brand = await Brand.findByIdAndUpdate(
                     { _id: req.params.id },
-                    { $push: { restaurantId: req.body.restaurantId } },
+                    { $push: { restaurants: req.body.restaurants } },
                     { new: true }
                 );
                 res.send({
@@ -109,9 +109,9 @@ module.exports.brand_restaurantList_get = async (req, res) => {
         return res.status(404).json({ status: false, message: 'Brandname undefined' });
     }
     try {
-        const brandRestaurants = await Brand.findOne({ brandName: brandName }, { restaurantId: 1, brandName: 1 })
+        const brandRestaurants = await Brand.findOne({ brandName: brandName }, { restaurants: 1, brandName: 1 })
             .populate({
-                path: 'restaurantId',
+                path: 'restaurants',
                 model: 'restaurant',
                 select: 'name deliveryPrice distance restaurantImageURL supportedTypes isOfficial',
             })
