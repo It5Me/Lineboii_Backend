@@ -11,9 +11,13 @@ module.exports.foodAddition_get = async (req, res) => {
 module.exports.foodAddition_create = async (req, res) => {
     try {
         const newFoodAddition = await FoodAddition.create(req.body);
-        res.status(200).send(newFoodAddition);
+        return res.status(200).send(newFoodAddition);
     } catch (error) {
         console.log(error.message);
+        if (error.code === 11000) {
+            return res.status(400).send('foodaddition already exist!');
+        }
+        return res.status(400).send({ status: false, message: error.message });
     }
 };
 module.exports.add_menu_foodaddition = async (req, res) => {
@@ -55,8 +59,7 @@ module.exports.edit_foodaddition = async (req, res) => {
         const getFoodAddition = await FoodAddition.findOne({ _id: req.params.id });
         console.log('getFoodAddition', getFoodAddition);
         if (getFoodAddition) {
-            const newFoodAddition = await FoodAddition.findByIdAndUpdate(getFoodAddition._id, req.body, { new: true });
-            console.log(newFoodAddition);
+            await FoodAddition.findByIdAndUpdate(getFoodAddition._id, req.body);
             return res.status(200).json({
                 status: true,
                 message: 'Updata FoodAddition Complete',
@@ -67,4 +70,18 @@ module.exports.edit_foodaddition = async (req, res) => {
     } catch (error) {
         console.log(error);
     }
+};
+module.exports.delete_foodaddition = async (req, res) => {
+    try {
+        const foodaddition = await FoodAddition.findById(req.params.id);
+        if (foodaddition) {
+            await FoodAddition.findByIdAndRemove(req.params.id);
+            res.status(200).send({
+                status: true,
+                message: 'delete foodaddition',
+            });
+        } else {
+            res.status(400).send({ status: false, message: 'Invalid foodaddition' });
+        }
+    } catch (error) {}
 };
