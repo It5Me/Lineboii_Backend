@@ -6,9 +6,11 @@ const foodSchema = new Schema({
     },
     title: {
         type: String,
+        unique: true,
     },
     subtitle: {
         type: String,
+        unique: true,
     },
     price: {
         type: Number,
@@ -21,8 +23,9 @@ const foodSchema = new Schema({
         type: Number,
         default: 1,
     },
-    foodAdditionId: {
+    foodAdditions: {
         type: [mongoose.Types.ObjectId],
+        unique: true,
     },
 });
 

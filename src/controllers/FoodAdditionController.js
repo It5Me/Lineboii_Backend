@@ -23,11 +23,11 @@ module.exports.foodAddition_create = async (req, res) => {
 module.exports.add_menu_foodaddition = async (req, res) => {
     let exist = false;
     try {
-        const currentfoodaddition = await FoodAddition.findById(req.params.id);
-        console.log(currentfoodaddition);
-        if (currentfoodaddition) {
-            currentfoodaddition.menus.map((value) => {
-                if (req.body.menuId === String(value)) {
+        const currentFoodAddition = await FoodAddition.findById(req.params.id);
+        console.log(currentFoodAddition);
+        if (currentFoodAddition) {
+            currentFoodAddition.menus.map((value) => {
+                if (req.body.menus === String(value)) {
                     exist = true;
                 }
             });
@@ -36,7 +36,7 @@ module.exports.add_menu_foodaddition = async (req, res) => {
             } else {
                 const foodaddition = await FoodAddition.findByIdAndUpdate(
                     { _id: req.params.id },
-                    { $push: { menus: req.body.menuId } },
+                    { $push: { menus: req.body.menus } },
                     { new: true }
                 ).populate({
                     path: 'menus',
@@ -83,5 +83,7 @@ module.exports.delete_foodaddition = async (req, res) => {
         } else {
             res.status(400).send({ status: false, message: 'Invalid foodaddition' });
         }
-    } catch (error) {}
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
 };
