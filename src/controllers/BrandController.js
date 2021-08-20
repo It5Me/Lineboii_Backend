@@ -78,7 +78,7 @@ module.exports.add_restaurant_brand = async (req, res) => {
         if (currentbrand) {
             currentbrand.restaurants.map((value) => {
                 // console.log(value);
-                if (req.body.restaurants === String(value)) {
+                if (req.body.restaurant === String(value)) {
                     exist = true;
                 }
             });
@@ -87,7 +87,7 @@ module.exports.add_restaurant_brand = async (req, res) => {
             } else {
                 const brand = await Brand.findByIdAndUpdate(
                     { _id: req.params.id },
-                    { $push: { restaurants: req.body.restaurants } },
+                    { $push: { restaurants: req.body.restaurant } },
                     { new: true }
                 );
                 res.send({

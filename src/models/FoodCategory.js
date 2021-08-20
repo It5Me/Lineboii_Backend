@@ -5,9 +5,11 @@ const foodCategorySchema = new Schema({
     header: {
         type: String,
         required: [true, 'Please enter name header'],
+        unique: true,
     },
-    foodId: {
+    foods: {
         type: [mongoose.Types.ObjectId],
+        uniqe: true,
     },
 });
 

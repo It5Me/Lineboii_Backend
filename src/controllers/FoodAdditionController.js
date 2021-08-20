@@ -27,7 +27,7 @@ module.exports.add_menu_foodaddition = async (req, res) => {
         console.log(currentFoodAddition);
         if (currentFoodAddition) {
             currentFoodAddition.menus.map((value) => {
-                if (req.body.menus === String(value)) {
+                if (req.body.menu === String(value)) {
                     exist = true;
                 }
             });
@@ -36,7 +36,7 @@ module.exports.add_menu_foodaddition = async (req, res) => {
             } else {
                 const foodaddition = await FoodAddition.findByIdAndUpdate(
                     { _id: req.params.id },
-                    { $push: { menus: req.body.menus } },
+                    { $push: { menus: req.body.menu } },
                     { new: true }
                 ).populate({
                     path: 'menus',
