@@ -21,7 +21,7 @@ module.exports.add_foodaddition_food = async (req, res) => {
     let exist = false;
     try {
         const currentFood = await Food.findById(req.params.id);
-        console.log('current', currentFood);
+        // console.log('current', currentFood);
         if (currentFood) {
             currentFood.foodAdditions.map((value) => {
                 if (req.body.foodAdditions === String(value)) {
@@ -47,5 +47,21 @@ module.exports.add_foodaddition_food = async (req, res) => {
         }
     } catch (error) {
         console.log(error);
+    }
+};
+module.exports.delete_food = async (req, res) => {
+    try {
+        const food = await Food.findById(req.params.id);
+        if (food) {
+            await Food.findByIdAndRemove(req.params.id);
+            res.status(200).send({
+                status: true,
+                message: 'delete food',
+            });
+        } else {
+            res.status(400).send({ status: false, message: 'Invalid food' });
+        }
+    } catch (error) {
+        res.status(400).send(error.message);
     }
 };
