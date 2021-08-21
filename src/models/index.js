@@ -1,3 +1,5 @@
+require('./Address');
+require('./DeliverLocation');
 require('./Promotion');
 require('./PromotionSet');
 require('./Menu');
