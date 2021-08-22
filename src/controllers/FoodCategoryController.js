@@ -50,7 +50,7 @@ module.exports.add_foodCategory_restaurant = async (req, res) => {
         console.log(error);
     }
 };
-module.exports.delete_food = async (req, res) => {
+module.exports.delete_foodCategory = async (req, res) => {
     try {
         const foodCategory = await FoodCategory.findById(req.params.id);
         if (foodCategory) {
@@ -61,6 +61,23 @@ module.exports.delete_food = async (req, res) => {
             });
         } else {
             res.status(400).send({ status: false, message: 'Invalid foodcategory' });
+        }
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+};
+module.exports.foodCategory_edit = async (req, res) => {
+    try {
+        const getfoodCategory = await FoodCategory.findOne({ _id: req.params.id });
+        console.log(getfoodCategory);
+        if (getfoodCategory) {
+            await FoodCategory.findByIdAndUpdate(getfoodCategory._id, req.body);
+            return res.status(200).json({
+                status: true,
+                message: 'Updata FoodCategory Complete',
+            });
+        } else {
+            res.status(400).send('Invalid FoodCategory');
         }
     } catch (error) {
         res.status(400).send(error.message);

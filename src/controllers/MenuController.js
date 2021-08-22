@@ -17,3 +17,20 @@ module.exports.menu_create = async (req, res) => {
         console.log(error);
     }
 };
+module.exports.menu_edit = async (req, res) => {
+    try {
+        const getMenu = await Menu.findOne({ _id: req.params.id });
+        console.log(getMenu);
+        if (getMenu) {
+            await Menu.findByIdAndUpdate(getMenu._id, req.body);
+            return res.status(200).json({
+                status: true,
+                message: 'Updata Menu Complete',
+            });
+        } else {
+            res.status(400).send('Invalid menu');
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+};
