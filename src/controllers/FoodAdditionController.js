@@ -8,7 +8,7 @@ module.exports.foodAddition_get = async (req, res) => {
         console.log(error.message);
     }
 };
-module.exports.foodAddition_create = async (req, res) => {
+module.exports.create_foodAddition = async (req, res) => {
     try {
         const newFoodAddition = await FoodAddition.create(req.body);
         return res.status(200).send(newFoodAddition);
@@ -20,7 +20,7 @@ module.exports.foodAddition_create = async (req, res) => {
         return res.status(400).send({ status: false, message: error.message });
     }
 };
-module.exports.add_menu_foodaddition = async (req, res) => {
+module.exports.add_menu_foodAddition = async (req, res) => {
     let exist = false;
     try {
         const currentFoodAddition = await FoodAddition.findById(req.params.id);
@@ -53,7 +53,7 @@ module.exports.add_menu_foodaddition = async (req, res) => {
         console.log(error);
     }
 };
-module.exports.edit_foodaddition = async (req, res) => {
+module.exports.edit_foodAddition = async (req, res) => {
     console.log(req.body);
     try {
         const getFoodAddition = await FoodAddition.findOne({ _id: req.params.id });
@@ -71,7 +71,7 @@ module.exports.edit_foodaddition = async (req, res) => {
         console.log(error);
     }
 };
-module.exports.delete_foodaddition = async (req, res) => {
+module.exports.delete_foodAddition = async (req, res) => {
     try {
         const foodaddition = await FoodAddition.findById(req.params.id);
         if (foodaddition) {

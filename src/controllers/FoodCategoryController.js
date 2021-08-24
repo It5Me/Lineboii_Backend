@@ -66,12 +66,12 @@ module.exports.delete_foodCategory = async (req, res) => {
         res.status(400).send(error.message);
     }
 };
-module.exports.foodCategory_edit = async (req, res) => {
+module.exports.edit_foodCategory = async (req, res) => {
     try {
-        const getfoodCategory = await FoodCategory.findOne({ _id: req.params.id });
-        console.log(getfoodCategory);
-        if (getfoodCategory) {
-            await FoodCategory.findByIdAndUpdate(getfoodCategory._id, req.body);
+        const getFoodCategory = await FoodCategory.findOne({ _id: req.params.id });
+        console.log(getFoodCategory);
+        if (getFoodCategory) {
+            await FoodCategory.findByIdAndUpdate(getFoodCategory._id, req.body);
             return res.status(200).json({
                 status: true,
                 message: 'Updata FoodCategory Complete',

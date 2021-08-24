@@ -65,3 +65,20 @@ module.exports.delete_food = async (req, res) => {
         res.status(400).send(error.message);
     }
 };
+module.exports.edit_food = async (req, res) => {
+    try {
+        const getFood = await Food.findOne({ _id: req.params.id });
+        console.log(getFood);
+        if (getFood) {
+            await Food.findByIdAndUpdate(getFood._id, req.body);
+            return res.status(200).json({
+                status: true,
+                message: 'Updata Food Complete',
+            });
+        } else {
+            res.status(400).send('Invalid Food');
+        }
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+};
