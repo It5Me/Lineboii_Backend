@@ -3,11 +3,10 @@ const Schema = mongoose.Schema;
 const foodAdditionSchema = new Schema({
     title: {
         type: String,
-        required: [true, 'Please enter title'],
+        required: [true, 'Please enter name foodaddition'],
     },
     subtitle: {
         type: String,
-        required: [true, 'Please enter subtitle'],
     },
     type: {
         type: String,

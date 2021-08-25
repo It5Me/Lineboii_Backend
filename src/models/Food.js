@@ -1,19 +1,20 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const foodSchema = new Schema({
-    foodImageURL: {
-        type: String,
-    },
     title: {
         type: String,
-        unique: true,
+        required: [true, 'Please enter name food'],
     },
     subtitle: {
         type: String,
-        unique: true,
+    },
+    foodImageURL: {
+        type: String,
+        required: [true, 'Please enter food image url'],
     },
     price: {
         type: Number,
+        required: [true, 'Please enter food price'],
     },
     additionalDetail: {
         type: String,
@@ -25,6 +26,7 @@ const foodSchema = new Schema({
     },
     foodAdditions: {
         type: [mongoose.Types.ObjectId],
+        validate: [(v) => Array.isArray(v) && v.length > 0, 'Please enter at least one foodaddition'],
         unique: true,
     },
 });

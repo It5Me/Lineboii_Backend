@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const restaurantSchema = new Schema({
     name: {
         type: String,
-        require: [true, 'Please provide a username '],
+        require: [true, 'Please enter name restaurant'],
         unique: true,
     },
     timeDelivery: {

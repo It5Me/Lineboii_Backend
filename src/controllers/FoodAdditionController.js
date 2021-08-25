@@ -53,7 +53,7 @@ module.exports.add_menu_foodAddition = async (req, res) => {
                     select: 'name price',
                 });
                 console.log(foodaddition);
-                res.status(200).send({ data: foodaddition, message: 'update menuId in foodaddition' });
+                res.status(200).send({ data: foodaddition, message: 'update menu in foodaddition' });
             }
         } else {
             res.status(400).send('Invalid foodaddition');
