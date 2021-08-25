@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const FoodAddition = mongoose.model('foodaddition');
-module.exports.foodAddition_get = async (req, res) => {
+const Menu = mongoose.model('menu');
+module.exports.get_foodAddition = async (req, res) => {
     try {
         const currentFoodAddition = await FoodAddition.findById(req.params.id);
         res.status(200).send(currentFoodAddition);
@@ -15,19 +16,27 @@ module.exports.create_foodAddition = async (req, res) => {
     } catch (error) {
         console.log(error.message);
         if (error.code === 11000) {
-            return res.status(400).send('foodaddition already exist!');
+            return res.status(400).send('menu already exist!');
         }
         return res.status(400).send({ status: false, message: error.message });
     }
 };
 module.exports.add_menu_foodAddition = async (req, res) => {
     let exist = false;
+    console.log('body', req.body);
     try {
-        const currentFoodAddition = await FoodAddition.findById(req.params.id);
-        console.log(currentFoodAddition);
+        const currentFoodAddition = await FoodAddition.findById(req.params.id).populate({
+            path: 'menus',
+            model: 'menu',
+            select: 'name',
+        });
+        // console.log('currentFoodAddition', currentFoodAddition.menus);
+        const newMenu = await Menu.findById(req.body.menu, { name: 1 });
+        console.log('newMenu', newMenu);
         if (currentFoodAddition) {
-            currentFoodAddition.menus.map((value) => {
-                if (req.body.menu === String(value)) {
+            currentFoodAddition.menus.map((menu) => {
+                console.log('name', menu.name);
+                if (newMenu.name === String(menu.name)) {
                     exist = true;
                 }
             });

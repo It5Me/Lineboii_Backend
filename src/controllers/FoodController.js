@@ -49,22 +49,7 @@ module.exports.add_foodaddition_food = async (req, res) => {
         console.log(error);
     }
 };
-module.exports.delete_food = async (req, res) => {
-    try {
-        const food = await Food.findById(req.params.id);
-        if (food) {
-            await Food.findByIdAndRemove(req.params.id);
-            res.status(200).send({
-                status: true,
-                message: 'delete food',
-            });
-        } else {
-            res.status(400).send({ status: false, message: 'Invalid food' });
-        }
-    } catch (error) {
-        res.status(400).send(error.message);
-    }
-};
+
 module.exports.edit_food = async (req, res) => {
     try {
         const getFood = await Food.findOne({ _id: req.params.id });
@@ -77,6 +62,22 @@ module.exports.edit_food = async (req, res) => {
             });
         } else {
             res.status(400).send('Invalid Food');
+        }
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+};
+module.exports.delete_food = async (req, res) => {
+    try {
+        const food = await Food.findById(req.params.id);
+        if (food) {
+            await Food.findByIdAndRemove(req.params.id);
+            res.status(200).send({
+                status: true,
+                message: 'delete food',
+            });
+        } else {
+            res.status(400).send({ status: false, message: 'Invalid food' });
         }
     } catch (error) {
         res.status(400).send(error.message);
