@@ -11,6 +11,15 @@ module.exports.get_foodAddition = async (req, res) => {
 };
 module.exports.create_foodAddition = async (req, res) => {
     try {
+        let menusId = [];
+        // console.log('body creat foodad', req.body.menus);
+        const newMenu = await Menu.create(req.body.menus);
+        console.log(newMenu);
+        newMenu.forEach((menuId) => {
+            console.log('menuId', menuId.id);
+            menusId.push(menuId.id);
+        });
+        req.body['menus'] = menusId;
         const newFoodAddition = await FoodAddition.create(req.body);
         return res.status(200).send(newFoodAddition);
     } catch (error) {
@@ -24,20 +33,31 @@ module.exports.create_foodAddition = async (req, res) => {
 module.exports.add_menu_foodAddition = async (req, res) => {
     let exist = false;
     console.log('body', req.body);
+    let menusId = [];
     try {
         const currentFoodAddition = await FoodAddition.findById(req.params.id).populate({
             path: 'menus',
             model: 'menu',
             select: 'name',
         });
+
         // console.log('currentFoodAddition', currentFoodAddition.menus);
-        const newMenu = await Menu.findById(req.body.menu, { name: 1 });
-        console.log('newMenu', newMenu);
+        // const newMenu = await Menu.findById(req.body.menu, { name: 1 });
+
         if (currentFoodAddition) {
-            currentFoodAddition.menus.map((menu) => {
+            // console.log('body creat foodad', req.body.menus);
+            const nameMenu = req.body.name;
+            const newMenu = await Menu.create(req.body.menus);
+            newMenu.forEach((menuId) => {
+                console.log('menuId', menuId.id);
+                menusId.push(menuId.id);
+            });
+            req.body['menus'] = menusId;
+            currentFoodAddition.menus.forEach((menu) => {
                 console.log('name', menu.name);
                 if (newMenu.name === String(menu.name)) {
                     exist = true;
+                } else {
                 }
             });
             if (exist) {
@@ -52,6 +72,7 @@ module.exports.add_menu_foodAddition = async (req, res) => {
                     model: 'menu',
                     select: 'name price',
                 });
+
                 console.log(foodaddition);
                 res.status(200).send({ data: foodaddition, message: 'update menu in foodaddition' });
             }
