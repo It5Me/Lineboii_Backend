@@ -33,46 +33,34 @@ module.exports.create_foodAddition = async (req, res) => {
 module.exports.add_menu_foodAddition = async (req, res) => {
     let exist = false;
     console.log('body', req.body);
-    let menusId = [];
     try {
         const currentFoodAddition = await FoodAddition.findById(req.params.id).populate({
             path: 'menus',
             model: 'menu',
             select: 'name',
         });
-
-        // console.log('currentFoodAddition', currentFoodAddition.menus);
-        // const newMenu = await Menu.findById(req.body.menu, { name: 1 });
-
         if (currentFoodAddition) {
-            // console.log('body creat foodad', req.body.menus);
-            const nameMenu = req.body.name;
-            const newMenu = await Menu.create(req.body.menus);
-            newMenu.forEach((menuId) => {
-                console.log('menuId', menuId.id);
-                menusId.push(menuId.id);
-            });
-            req.body['menus'] = menusId;
+            console.log('have foodaddition');
             currentFoodAddition.menus.forEach((menu) => {
                 console.log('name', menu.name);
-                if (newMenu.name === String(menu.name)) {
+                if (req.body.name === String(menu.name)) {
                     exist = true;
-                } else {
                 }
             });
             if (exist) {
                 res.status(400).send('menu already exist');
             } else {
+                const newMenu = await Menu.create(req.body);
+                console.log('newMenu', newMenu._id);
                 const foodaddition = await FoodAddition.findByIdAndUpdate(
                     { _id: req.params.id },
-                    { $push: { menus: req.body.menu } },
+                    { $push: { menus: newMenu._id } },
                     { new: true }
                 ).populate({
                     path: 'menus',
                     model: 'menu',
                     select: 'name price',
                 });
-
                 console.log(foodaddition);
                 res.status(200).send({ data: foodaddition, message: 'update menu in foodaddition' });
             }

@@ -15,8 +15,6 @@ const foodAdditionSchema = new Schema({
     },
     menus: {
         type: [mongoose.Types.ObjectId],
-        validate: [(v) => Array.isArray(v) && v.length > 0, 'Please enter at least one menu'],
-        unique: true,
     },
 });
 mongoose.model('foodaddition', foodAdditionSchema);
