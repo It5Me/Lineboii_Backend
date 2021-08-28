@@ -22,9 +22,6 @@ menuSchema.pre('findOneAndDelete', async function (next) {
         { new: true }
     );
     console.log('currentFoodAddition', currentFoodAddition);
-    // currentFoodAddition.menus.filter((menu_id) => menu_id != this._conditions._id);
-    // console.log(currentFoodAddition.menus);
-    // currentFoodAddition.save();
     next();
 });
 mongoose.model('menu', menuSchema);

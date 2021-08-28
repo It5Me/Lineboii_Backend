@@ -93,7 +93,7 @@ module.exports.delete_foodAddition = async (req, res) => {
     try {
         const foodaddition = await FoodAddition.findById(req.params.id);
         if (foodaddition) {
-            await FoodAddition.findByIdAndRemove(req.params.id);
+            await FoodAddition.findOneAndDelete({ _id: req.params.id });
             res.status(200).send({
                 status: true,
                 message: 'delete foodaddition',
