@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const FoodCategory = mongoose.model('foodcategory');
-
+const Food = mongoose.model('food');
 module.exports.foodCategory_get = async (req, res) => {
     try {
         const currentFoodCategory = await FoodCategory.findById(req.params.id);
@@ -18,23 +18,29 @@ module.exports.foodCategory_create = async (req, res) => {
         res.status(400).send(error.message);
     }
 };
-module.exports.add_foodCategory_restaurant = async (req, res) => {
+module.exports.add_food_foodCategory = async (req, res) => {
     let exist = false;
+    console.log('req.body', req.body);
     try {
-        const currentFoodCategory = await FoodCategory.findById(req.params.id);
+        const currentFoodCategory = await FoodCategory.findById(req.params.id).populate({
+            path: 'foods',
+            model: 'food',
+            select: 'title subtitle price',
+        });
         // console.log('current', currentFoodCategory);
         if (currentFoodCategory) {
-            currentFoodCategory.foods.map((value) => {
-                if (req.body.food === String(value)) {
+            currentFoodCategory.foods.forEach((food) => {
+                if (req.body.title === String(food.title)) {
                     exist = true;
                 }
             });
             if (exist) {
                 res.status(400).send('foodcategory already exist');
             } else {
+                const newFood = await Food.create(req.body);
                 const foodCategory = await FoodCategory.findByIdAndUpdate(
                     { _id: req.params.id },
-                    { $push: { foods: req.body.food } },
+                    { $push: { foods: newFood._id } },
                     { new: true }
                 ).populate({
                     path: 'foods',
@@ -48,6 +54,7 @@ module.exports.add_foodCategory_restaurant = async (req, res) => {
         }
     } catch (error) {
         console.log(error);
+        res.status(400).send(error.message);
     }
 };
 module.exports.delete_foodCategory = async (req, res) => {

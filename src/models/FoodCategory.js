@@ -8,8 +8,6 @@ const foodCategorySchema = new Schema({
     },
     foods: {
         type: [mongoose.Types.ObjectId],
-        validate: [(v) => Array.isArray(v) && v.length > 0, 'Please enter at least one food'],
-        uniqe: true,
     },
 });
 
