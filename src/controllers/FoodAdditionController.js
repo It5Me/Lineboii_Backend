@@ -11,15 +11,15 @@ module.exports.get_foodAddition = async (req, res) => {
 };
 module.exports.create_foodAddition = async (req, res) => {
     try {
-        let menusId = [];
-        // console.log('body creat foodad', req.body.menus);
-        const newMenu = await Menu.create(req.body.menus);
-        console.log(newMenu);
-        newMenu.forEach((menuId) => {
-            console.log('menuId', menuId.id);
-            menusId.push(menuId.id);
-        });
-        req.body['menus'] = menusId;
+        // let menusId = [];
+        // // console.log('body creat foodad', req.body.menus);
+        // const newMenu = await Menu.create(req.body.menus);
+        // console.log(newMenu);
+        // newMenu.forEach((menuId) => {
+        //     console.log('menuId', menuId.id);
+        //     menusId.push(menuId.id);
+        // });
+        // req.body['menus'] = menusId;
         const newFoodAddition = await FoodAddition.create(req.body);
         return res.status(200).send(newFoodAddition);
     } catch (error) {

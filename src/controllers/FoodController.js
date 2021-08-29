@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Food = mongoose.model('food');
-
+const FoodAddition = mongoose.model('foodaddition');
 module.exports.food_get = async (req, res) => {
     try {
         const currentFood = await Food.findById(req.params.id);
@@ -19,21 +19,28 @@ module.exports.food_create = async (req, res) => {
 };
 module.exports.add_foodaddition_food = async (req, res) => {
     let exist = false;
+    console.log('req.body', req.body);
     try {
-        const currentFood = await Food.findById(req.params.id);
-        // console.log('current', currentFood);
+        const currentFood = await Food.findById(req.params.id).populate({
+            path: 'foodAdditions',
+            model: 'foodaddition',
+            select: 'title subtitle',
+        });
+        console.log('currentFood', currentFood);
         if (currentFood) {
-            currentFood.foodAdditions.map((value) => {
-                if (req.body.foodAddition === String(value)) {
+            currentFood.foodAdditions.forEach((foodaddition) => {
+                console.log('foodaddition', foodaddition);
+                if (req.body.title === String(foodaddition.title)) {
                     exist = true;
                 }
             });
             if (exist) {
                 res.status(400).send('foodaddition already exist');
             } else {
+                const newFoodAddition = await FoodAddition.create(req.body);
                 const food = await Food.findByIdAndUpdate(
                     { _id: req.params.id },
-                    { $push: { foodAdditions: req.body.foodAddition } },
+                    { $push: { foodAdditions: newFoodAddition._id } },
                     { new: true }
                 ).populate({
                     path: 'foodAdditions',
@@ -47,6 +54,7 @@ module.exports.add_foodaddition_food = async (req, res) => {
         }
     } catch (error) {
         console.log(error);
+        res.status(400).send(error.message);
     }
 };
 

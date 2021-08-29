@@ -26,8 +26,6 @@ const foodSchema = new Schema({
     },
     foodAdditions: {
         type: [mongoose.Types.ObjectId],
-        validate: [(v) => Array.isArray(v) && v.length > 0, 'Please enter at least one foodaddition'],
-        unique: true,
     },
 });
 
