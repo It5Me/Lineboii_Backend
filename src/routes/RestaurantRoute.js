@@ -1,13 +1,12 @@
 const { Router } = require('express');
 const router = Router();
 const RestaurantController = require('../controllers/RestaurantController');
-const Authorization = require('../middleware/Authorization');
-const FoodController = require('../controllers/FoodCategoryController');
-router.get('/restaurants/home', Authorization, RestaurantController.restaurant_home_get);
-router.get('/restaurants/trending', Authorization, RestaurantController.restaurant_trending_get);
-router.get('/restaurants/recommend', Authorization, RestaurantController.restaurant_recommend_get);
-router.get('/restaurant/food', Authorization, RestaurantController.restaurant_food_get);
-router.get('/getrestaurant', RestaurantController.get_restaurant);
+
+router.get('/restaurant/:id', RestaurantController.get_restaurant);
+router.post('/restaurant', RestaurantController.create_restuarant);
+router.put('/restaurant/addfoodcategory/:id', RestaurantController.add_foodCategory_restaurant);
+router.put('/restaurant/edit/:id', RestaurantController.edit_restaurant);
+router.delete('/restaurant/:id', RestaurantController.delete_restaurant);
 
 module.exports = router;
 

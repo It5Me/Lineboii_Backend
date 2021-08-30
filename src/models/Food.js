@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const FoodCategory = mongoose.model('foodcategory');
 const foodSchema = new Schema({
     title: {
         type: String,
@@ -27,6 +28,17 @@ const foodSchema = new Schema({
     foodAdditions: {
         type: [mongoose.Types.ObjectId],
     },
+});
+foodAdditionSchema.pre('findOneAndDelete', async function (next) {
+    console.log('remove');
+    console.log('this', this._conditions._id);
+    const currentFoodCategory = await FoodCategory.findOneAndUpdate(
+        { foodAdditions: this._conditions._id },
+        { $pull: { foodAdditions: this._conditions._id } },
+        { new: true }
+    );
+    console.log('currentFood', currentFoodCategory);
+    next();
 });
 
 mongoose.model('food', foodSchema);

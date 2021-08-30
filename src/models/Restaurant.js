@@ -43,7 +43,7 @@ const restaurantSchema = new Schema({
         type: String,
         require: true,
     },
-    foodCategoriesId: {
+    foodCategories: {
         type: [mongoose.Types.ObjectId],
     },
     myScore: {

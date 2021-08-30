@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+const Restaurant = mongoose.model('restaurant');
 const foodCategorySchema = new Schema({
     header: {
         type: String,
@@ -9,6 +9,17 @@ const foodCategorySchema = new Schema({
     foods: {
         type: [mongoose.Types.ObjectId],
     },
+});
+foodAdditionSchema.pre('findOneAndDelete', async function (next) {
+    console.log('remove');
+    console.log('this', this._conditions._id);
+    const currentRestaurant = await Restaurant.findOneAndUpdate(
+        { foodCategories: this._conditions._id },
+        { $pull: { foodCategories: this._conditions._id } },
+        { new: true }
+    );
+    console.log('currentRestaurant', currentRestaurant);
+    next();
 });
 
 mongoose.model('foodcategory', foodCategorySchema);
