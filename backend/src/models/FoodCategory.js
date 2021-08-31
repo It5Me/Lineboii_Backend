@@ -10,7 +10,7 @@ const foodCategorySchema = new Schema({
         type: [mongoose.Types.ObjectId],
     },
 });
-foodAdditionSchema.pre('findOneAndDelete', async function (next) {
+foodCategorySchema.pre('findOneAndDelete', async function (next) {
     console.log('remove');
     console.log('this', this._conditions._id);
     const currentRestaurant = await Restaurant.findOneAndUpdate(
